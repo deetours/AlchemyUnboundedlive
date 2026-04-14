@@ -62,26 +62,26 @@ function LifeCoachingInterior() {
   const s1Y = useTransform(s1, [0, 1], ["0%", "50%"])
   const s1Op = useTransform(s1, [0, 0.8], [1, 0])
 
-  // ACT 2: Inquiry
+  // ACT 2: Inquiry (Cinematic Drift)
   const { scrollYProgress: s2 } = useScroll({ target: r2, offset: ["start start", "end end"] })
   const s2T1 = useTransform(s2, [0, 0.15, 0.2], [0, 1, 0])
-  const s2Y1 = useTransform(s2, [0, 0.2], [20, -20])
+  const s2Y1 = useTransform(s2, [0, 0.2], ["40vh", "-40vh"])
   const s2B1 = useTransform(s2, [0, 0.15, 0.2], ["10px", "0px", "10px"])
 
   const s2T2 = useTransform(s2, [0.2, 0.35, 0.4], [0, 1, 0])
-  const s2Y2 = useTransform(s2, [0.2, 0.4], [20, -20])
+  const s2Y2 = useTransform(s2, [0.2, 0.4], ["40vh", "-40vh"])
   const s2B2 = useTransform(s2, [0.2, 0.35, 0.4], ["10px", "0px", "10px"])
 
   const s2T3 = useTransform(s2, [0.4, 0.55, 0.6], [0, 1, 0])
-  const s2Y3 = useTransform(s2, [0.4, 0.6], [20, -20])
+  const s2Y3 = useTransform(s2, [0.4, 0.6], ["40vh", "-40vh"])
   const s2B3 = useTransform(s2, [0.4, 0.55, 0.6], ["10px", "0px", "10px"])
 
   const s2T4 = useTransform(s2, [0.6, 0.75, 0.8], [0, 1, 0])
-  const s2Y4 = useTransform(s2, [0.6, 0.8], [20, -20])
+  const s2Y4 = useTransform(s2, [0.6, 0.8], ["40vh", "-40vh"])
   const s2B4 = useTransform(s2, [0.6, 0.75, 0.8], ["10px", "0px", "10px"])
 
   const s2T5 = useTransform(s2, [0.8, 0.95, 1], [0, 1, 0])
-  const s2Y5 = useTransform(s2, [0.8, 1], [20, -20])
+  const s2Y5 = useTransform(s2, [0.8, 1], ["40vh", "-40vh"])
   const s2B5 = useTransform(s2, [0.8, 0.95, 1], ["10px", "0px", "10px"])
 
   // ACT 3: Heroic Journey (The Solar Corona)
@@ -103,7 +103,7 @@ function LifeCoachingInterior() {
   // There are 8 cards, each takes ~1/4 to 1/3 of the screen width depending on device.
   // To keep it perfectly responsive without JS dimension calculation, we translate it -75%.
   // CSS: The strip container must be wide enough.
-  const s4X = useTransform(s4, [0.1, 0.9], ["10vw", "-200vw"]) // Moves massive distance
+  const s4X = useTransform(s4, [0.1, 0.9], ["5%", "-75%"])
 
   // ACT 5: The Containers
   const { scrollYProgress: s5 } = useScroll({ target: r5, offset: ["start start", "end end"] })
@@ -199,7 +199,7 @@ function LifeCoachingInterior() {
            {/* The Horizontal Filmstrip Container */}
            <motion.div 
              style={{ x: s4X }} 
-             className="flex gap-8 px-[10vw] items-center w-[300vw] lg:w-[200vw]"
+             className="flex gap-8 px-[10vw] items-center w-max"
            >
              {ARCHETYPES.map((arch, i) => (
                 <div key={i} className="min-w-[70vw] md:min-w-[40vw] lg:min-w-[25vw] h-full flex flex-col p-12 border border-foreground/10 bg-[#F5F4F1] hover:bg-[#946DE3] hover:text-white transition-all duration-700 rounded-xl group shrink-0">

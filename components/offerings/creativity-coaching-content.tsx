@@ -18,36 +18,41 @@ export default function CreativityCoachingContent() {
   const s1HeroBlur = useTransform(s1, [0, 0.4], ["0px", "20px"])
   const s1HeroY = useTransform(s1, [0, 0.4], [0, -50])
 
-  // ACT 2: The Friction (Rapid Sequential Reveals)
+  // ACT 2: The Friction (Cinematic Drift)
   const { scrollYProgress: s2 } = useScroll({ target: r2, offset: ["start start", "end end"] })
   const s2Op1 = useTransform(s2, [0, 0.1, 0.2], [0, 1, 0])
-  const s2Y1 = useTransform(s2, [0, 0.1, 0.2], [20, 0, -20])
+  const s2Y1 = useTransform(s2, [0, 0.1, 0.2], ["40vh", "0vh", "-40vh"])
   const s2Op2 = useTransform(s2, [0.15, 0.25, 0.35], [0, 1, 0])
-  const s2Y2 = useTransform(s2, [0.15, 0.25, 0.35], [20, 0, -20])
+  const s2Y2 = useTransform(s2, [0.15, 0.25, 0.35], ["40vh", "0vh", "-40vh"])
   const s2Op3 = useTransform(s2, [0.3, 0.4, 0.5], [0, 1, 0])
-  const s2Y3 = useTransform(s2, [0.3, 0.4, 0.5], [20, 0, -20])
+  const s2Y3 = useTransform(s2, [0.3, 0.4, 0.5], ["40vh", "0vh", "-40vh"])
   const s2Op4 = useTransform(s2, [0.45, 0.55, 0.65], [0, 1, 0])
-  const s2Y4 = useTransform(s2, [0.45, 0.55, 0.65], [20, 0, -20])
+  const s2Y4 = useTransform(s2, [0.45, 0.55, 0.65], ["40vh", "0vh", "-40vh"])
   const s2Op5 = useTransform(s2, [0.6, 0.7, 0.8], [0, 1, 0])
-  const s2Y5 = useTransform(s2, [0.6, 0.7, 0.8], [20, 0, -20])
+  const s2Y5 = useTransform(s2, [0.6, 0.7, 0.8], ["40vh", "0vh", "-40vh"])
   const s2Op6 = useTransform(s2, [0.8, 0.95], [0, 1]) // Anchor text
-  const s2Y6 = useTransform(s2, [0.8, 0.95], [20, 0])
+  const s2Y6 = useTransform(s2, [0.8, 0.95], ["40vh", "0vh"])
 
-  // ACT 3: The Call to Creation (The Purple Signal Light Engine)
+  // ACT 3: The Call to Creation (Cascading Waterfall)
   const { scrollYProgress: s3 } = useScroll({ target: r3, offset: ["start start", "end end"] })
   const s3BgOp = useTransform(s3, [0, 0.2, 0.8, 1], [0, 0.8, 0.8, 0])
   const s3Scale = useTransform(s3, [0, 1], [0.8, 2.5])
-  // Text fading sequence slowed down for reading
-  const s3Op1 = useTransform(s3, [0, 0.3], [0, 1])
-  const s3Blur1 = useTransform(s3, [0, 0.3], ["10px", "0px"])
-  const s3Op2 = useTransform(s3, [0.3, 0.6], [0, 1])
-  const s3Blur2 = useTransform(s3, [0.3, 0.6], ["10px", "0px"])
-  const s3Op3 = useTransform(s3, [0.6, 0.8], [0, 1])
-  const s3Blur3 = useTransform(s3, [0.6, 0.8], ["10px", "0px"])
+  
+  // Anchor Header
+  const s3Op1 = useTransform(s3, [0, 0.2], [0, 1])
+  const s3Blur1 = useTransform(s3, [0, 0.2], ["10px", "0px"])
+  
+  // Waterfall List
+  const s3ListOp = useTransform(s3, [0.1, 0.3, 0.7, 0.9], [0, 1, 1, 0])
+  const s3ListY = useTransform(s3, [0.1, 0.9], ["90vh", "-90vh"])
+
+  // Final Conclusion
+  const s3Op3 = useTransform(s3, [0.75, 0.9], [0, 1])
+  const s3Blur3 = useTransform(s3, [0.75, 0.9], ["10px", "0px"])
 
   // ACT 4: The Archetypes Filmstrip
   const { scrollYProgress: s4 } = useScroll({ target: r4, offset: ["start start", "end end"] })
-  const s4X = useTransform(s4, [0.1, 0.9], ["10vw", "-160vw"])
+  const s4X = useTransform(s4, [0.1, 0.9], ["5%", "-75%"])
 
   // ACT 5: The Embrace
   const { scrollYProgress: s5 } = useScroll({ target: r5, offset: ["start start", "end end"] })
@@ -82,38 +87,38 @@ export default function CreativityCoachingContent() {
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12 bg-[#F5F4F1]">
           
           <div className="relative w-full max-w-5xl mx-auto h-[400px] flex items-center justify-center text-center">
-            <motion.div style={{ opacity: s2Op1, y: s2Y1 }} className="absolute">
-              <p className="font-serif text-3xl md:text-5xl lg:text-7xl leading-tight">
+            <motion.div style={{ opacity: s2Op1, y: s2Y1 }} className="absolute w-full px-4">
+              <p className="font-serif text-[28px] md:text-5xl lg:text-7xl leading-tight">
                 The creative life, with all its gifts and rewards, is a <span className="italic">unique challenge.</span>
               </p>
             </motion.div>
 
-            <motion.div style={{ opacity: s2Op2, y: s2Y2 }} className="absolute">
-              <p className="font-serif text-3xl md:text-5xl lg:text-7xl leading-tight">
+            <motion.div style={{ opacity: s2Op2, y: s2Y2 }} className="absolute w-full px-4">
+              <p className="font-serif text-[28px] md:text-5xl lg:text-7xl leading-tight">
                 The creative process, with all its mystery and joy, is also a <span className="italic">unique challenge.</span>
               </p>
             </motion.div>
 
-            <motion.div style={{ opacity: s2Op3, y: s2Y3 }} className="absolute">
-              <p className="font-serif text-3xl md:text-5xl lg:text-7xl leading-tight">
+            <motion.div style={{ opacity: s2Op3, y: s2Y3 }} className="absolute w-full px-4">
+              <p className="font-serif text-[28px] md:text-5xl lg:text-7xl leading-tight">
                 The creative path, often a lonely one with support in short supply, is also a <span className="italic">unique challenge.</span>
               </p>
             </motion.div>
 
-            <motion.div style={{ opacity: s2Op4, y: s2Y4 }} className="absolute">
-              <p className="font-serif text-3xl md:text-5xl lg:text-7xl leading-tight">
+            <motion.div style={{ opacity: s2Op4, y: s2Y4 }} className="absolute w-full px-4">
+              <p className="font-serif text-[28px] md:text-5xl lg:text-7xl leading-tight">
                 The creative persona, with all its quirks, shadows and complexity, presents its <span className="italic">unique set of challenges.</span>
               </p>
             </motion.div>
 
-            <motion.div style={{ opacity: s2Op5, y: s2Y5 }} className="absolute">
-              <p className="font-serif text-3xl md:text-5xl lg:text-7xl leading-tight">
+            <motion.div style={{ opacity: s2Op5, y: s2Y5 }} className="absolute w-full px-4">
+              <p className="font-serif text-[28px] md:text-5xl lg:text-7xl leading-tight">
                 Societal and cultural pressures, along with the perils of the modern world, further <span className="italic">adds to these challenges.</span>
               </p>
             </motion.div>
 
-            <motion.div style={{ opacity: s2Op6, y: s2Y6 }} className="absolute">
-              <p className="font-serif text-4xl md:text-6xl lg:text-8xl tracking-tight leading-none mb-8">
+            <motion.div style={{ opacity: s2Op6, y: s2Y6 }} className="absolute w-full px-4">
+              <p className="font-serif text-[32px] md:text-6xl lg:text-8xl tracking-tight leading-none mb-8">
                 That&apos;s why creatives need a specialized and <span className="italic text-[#946DE3]">unique kind of support.</span>
               </p>
             </motion.div>
@@ -123,33 +128,40 @@ export default function CreativityCoachingContent() {
       </section>
 
       {/* ACT III: The Call to Creation */}
-      <section ref={r3} className="relative w-full h-[400vh] z-10 text-[#1A1A1A]">
+      <section ref={r3} className="relative w-full h-[500vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
           {/* THE SIGNAL (Deep Background Light Engine) */}
           <motion.div 
             style={{ opacity: s3BgOp, scale: s3Scale }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] md:w-[40vw] aspect-square bg-[#946DE3] rounded-full blur-[100px] pointer-events-none z-0 mix-blend-overlay"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[40vw] aspect-square bg-[#946DE3] rounded-full blur-[100px] pointer-events-none z-0 mix-blend-overlay"
           />
 
-          <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center space-y-8 relative z-10 px-4">
-            <motion.h2 style={{ opacity: s3Op1, filter: s3Blur1 }} className="text-center font-serif text-3xl md:text-5xl lg:text-7xl tracking-tight leading-none text-foreground">
+          {/* Absolute Fixed Elements */}
+          <div className="absolute inset-0 flex flex-col items-center justify-between py-[15vh] px-4 pointer-events-none z-10">
+            <motion.h2 style={{ opacity: s3Op1, filter: s3Blur1 }} className="text-center font-serif text-3xl md:text-5xl lg:text-7xl tracking-tight leading-none text-foreground drop-shadow-2xl">
               Because you matter, <br className="hidden md:block" /> and your creativity matters.
             </motion.h2>
-            
-            <motion.div style={{ opacity: s3Op2, filter: s3Blur2 }} className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 text-left max-w-4xl mx-auto mt-12 bg-[#F5F4F1]/60 p-8 md:p-12 border border-foreground/5 shadow-2xl backdrop-blur-sm rounded-sm">
-              <p className="font-serif text-lg md:text-xl leading-snug">• Create deep, honest and meaningful creative work</p>
-              <p className="font-serif text-lg md:text-xl leading-snug">• Explore and manifest your true creative potential</p>
-              <p className="font-serif text-lg md:text-xl leading-snug">• Build creative confidence and create boldly</p>
-              <p className="font-serif text-lg md:text-xl leading-snug">• Overcome blocks, resistance, demons and fears</p>
-              <p className="font-serif text-lg md:text-xl leading-snug">• Start and finish projects put on the backburner</p>
-              <p className="font-serif text-lg md:text-xl leading-snug">• Rediscover your inner child and infuse play</p>
-            </motion.div>
 
-            <motion.p style={{ opacity: s3Op3, filter: s3Blur3 }} className="font-serif text-xl md:text-3xl lg:text-4xl text-center leading-tight max-w-3xl opacity-90 text-[#946DE3] italic">
+            <motion.p style={{ opacity: s3Op3, filter: s3Blur3 }} className="font-serif text-2xl md:text-3xl lg:text-4xl text-center leading-tight max-w-3xl text-[#946DE3] italic drop-shadow-xl font-bold bg-[#F5F4F1]/40 px-6 py-4 rounded-full backdrop-blur-md">
               Live a joyful, fulfilling, meaningful, and successful creative life.
             </motion.p>
           </div>
+
+          {/* Scrolling Waterfall Grid */}
+          <motion.div 
+             style={{ y: s3ListY, opacity: s3ListOp }} 
+             className="w-full absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-6"
+          >
+            <div className="flex flex-col gap-y-10 md:gap-y-12 text-center md:text-left max-w-2xl mx-auto drop-shadow-xl">
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To create deep, honest and meaningful work.</p>
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To explore and manifest your true creative potential.</p>
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To build creative confidence and create boldly.</p>
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To overcome blocks, resistance, demons and fears.</p>
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To start and finish projects put on the backburner.</p>
+              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To rediscover your inner child and infuse play.</p>
+            </div>
+          </motion.div>
 
         </div>
       </section>
@@ -165,7 +177,7 @@ export default function CreativityCoachingContent() {
            {/* The Horizontal Filmstrip Container */}
            <motion.div 
              style={{ x: s4X }}
-             className="flex gap-8 md:gap-16 px-6 md:px-[10vw] w-[250vw] md:w-[200vw]"
+             className="flex gap-8 md:gap-16 px-6 md:px-[10vw] w-max"
            >
               {[
                 {
