@@ -200,7 +200,7 @@ export default function CreativityCoachingContent() {
       <section ref={r3} className="relative w-full h-[500vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
-          {/* PHASE 6: Subtle editorial image — behind purple orb, z-0, opacity whisper */}
+          {/* Background image whisper */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.06] mix-blend-multiply">
             <img 
               src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=60&w=2000&auto=format&fit=crop"
@@ -216,29 +216,35 @@ export default function CreativityCoachingContent() {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[40vw] aspect-square bg-[#946DE3] rounded-full blur-[100px] pointer-events-none z-0 mix-blend-overlay"
           />
 
-          {/* Absolute Fixed Elements */}
-          <div className="absolute inset-0 flex flex-col items-center justify-between py-[15vh] px-4 pointer-events-none z-10">
-            <motion.h2 style={{ opacity: s3Op1, filter: s3Blur1 }} className="text-center font-serif text-3xl md:text-5xl lg:text-7xl tracking-tight leading-none text-foreground drop-shadow-2xl">
-              Because you matter, <br className="hidden md:block" /> and your creativity matters.
-            </motion.h2>
+          {/* Header — pinned to top third, does NOT use justify-between which causes collision */}
+          <motion.h2
+            style={{ opacity: s3Op1, filter: s3Blur1 }}
+            className="absolute top-[12vh] md:top-[15vh] left-1/2 -translate-x-1/2 w-full text-center font-serif text-2xl md:text-5xl lg:text-7xl tracking-tight leading-tight text-foreground drop-shadow-2xl pointer-events-none z-10 px-6"
+          >
+            Because you matter,{" "}
+            <span className="block md:inline">and your creativity matters.</span>
+          </motion.h2>
 
-            <motion.p style={{ opacity: s3Op3, filter: s3Blur3 }} className="font-serif text-2xl md:text-3xl lg:text-4xl text-center leading-tight max-w-3xl text-[#946DE3] italic drop-shadow-xl font-bold bg-[#F5F4F1]/40 px-6 py-4 rounded-full backdrop-blur-md">
-              Live a joyful, fulfilling, meaningful, and successful creative life.
-            </motion.p>
-          </div>
+          {/* Footer — pinned to bottom third */}
+          <motion.p
+            style={{ opacity: s3Op3, filter: s3Blur3 }}
+            className="absolute bottom-[10vh] md:bottom-[15vh] left-1/2 -translate-x-1/2 w-full max-w-3xl text-center font-serif text-lg md:text-3xl lg:text-4xl leading-tight text-[#946DE3] italic drop-shadow-xl font-bold bg-[#F5F4F1]/40 px-6 py-3 rounded-full backdrop-blur-md pointer-events-none z-10"
+          >
+            Live a joyful, fulfilling, meaningful, and successful creative life.
+          </motion.p>
 
-          {/* Scrolling Waterfall Grid */}
+          {/* Scrolling Waterfall — travels between header and footer zones, clipped by overflow-hidden above */}
           <motion.div 
              style={{ y: s3ListY, opacity: s3ListOp }} 
              className="w-full absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-6"
           >
-            <div className="flex flex-col gap-y-10 md:gap-y-12 text-center md:text-left max-w-2xl mx-auto drop-shadow-xl">
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To create deep, honest and meaningful work.</p>
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To explore and manifest your true creative potential.</p>
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To build creative confidence and create boldly.</p>
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To overcome blocks, resistance, demons and fears.</p>
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To start and finish projects put on the backburner.</p>
-              <p className="font-serif text-[22px] md:text-3xl lg:text-4xl leading-tight font-bold text-[#1A1A1A]">To rediscover your inner child and infuse play.</p>
+            <div className="flex flex-col gap-y-8 md:gap-y-12 text-center md:text-left max-w-2xl mx-auto drop-shadow-xl">
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To create deep, honest and meaningful work.</p>
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To explore and manifest your true creative potential.</p>
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To build creative confidence and create boldly.</p>
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To overcome blocks, resistance, demons and fears.</p>
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To start and finish projects put on the backburner.</p>
+              <p className="font-serif text-[19px] md:text-3xl lg:text-4xl leading-snug font-bold text-[#1A1A1A]">To rediscover your inner child and infuse play.</p>
             </div>
           </motion.div>
 
@@ -305,14 +311,14 @@ export default function CreativityCoachingContent() {
 
       {/* ACT V: The Embrace Monolith */}
       <section ref={r5} className="relative w-full h-[400vh] z-10 bg-[#F5F4F1]">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-12 text-center text-[#1A1A1A]">
-            <motion.p style={{ opacity: s5Op1 }} className="font-serif text-3xl md:text-5xl lg:text-7xl leading-[1.2] max-w-5xl mx-auto mb-16">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-12 text-center text-[#1A1A1A] overflow-hidden">
+            <motion.p style={{ opacity: s5Op1 }} className="font-serif text-base sm:text-xl md:text-4xl lg:text-5xl leading-[1.4] md:leading-[1.2] max-w-5xl mx-auto mb-5 md:mb-10">
               I love working with creatives of all kinds, including visual artists, writers, dancers, performers, movement artists, sculptors, photographers, storytellers, film makers, actors, comedians, designers, and purpose-driven entrepreneurs.
             </motion.p>
-            <motion.p style={{ opacity: s5Op2 }} className="font-serif text-2xl md:text-4xl lg:text-5xl leading-[1.3] max-w-4xl mx-auto italic opacity-80 mb-16">
+            <motion.p style={{ opacity: s5Op2 }} className="font-serif text-sm sm:text-lg md:text-3xl lg:text-4xl leading-[1.4] max-w-4xl mx-auto italic opacity-80 mb-5 md:mb-10">
               I also love to support coaches, trainers, healers, therapists, consultants, teachers, and leaders in the personal development space.
             </motion.p>
-            <motion.p style={{ opacity: s5Op3 }} className="font-serif text-lg md:text-2xl leading-relaxed max-w-3xl mx-auto opacity-60 uppercase tracking-widest font-sans font-bold">
+            <motion.p style={{ opacity: s5Op3 }} className="font-serif text-xs md:text-xl leading-relaxed max-w-3xl mx-auto opacity-60 uppercase tracking-widest font-sans font-bold">
               I welcome non-conformists, mavericks, outliers and spiritual seekers who see the world in interesting and unique ways.
             </motion.p>
         </div>
