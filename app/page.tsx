@@ -506,27 +506,70 @@ export default function HomePage() {
         <StickyFrame className="bg-[#F5F4F1]">
           <div className="relative w-full h-full flex items-center justify-center px-8">
 
-            <motion.div style={{ opacity: t1Op, filter: t1Blur, scale: t1Scale }} className="absolute max-w-5xl text-center px-4">
+            {/* Portrait 1 — Kapildev Verma — synced to t1 scroll window */}
+            <motion.div
+              style={{ opacity: t1Op }}
+              className="absolute inset-0 pointer-events-none z-0"
+              aria-hidden="true"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center grayscale brightness-[0.18]"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2400&auto=format&fit=crop')" }}
+              />
+              {/* Vignette so text stays readable */}
+              <div className="absolute inset-0 bg-[#F5F4F1]/70" />
+            </motion.div>
+
+            {/* Portrait 2 — M.R. — synced to t2 scroll window */}
+            <motion.div
+              style={{ opacity: t2Op }}
+              className="absolute inset-0 pointer-events-none z-0"
+              aria-hidden="true"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center grayscale brightness-[0.18]"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=2400&auto=format&fit=crop')" }}
+              />
+              <div className="absolute inset-0 bg-[#F5F4F1]/70" />
+            </motion.div>
+
+            {/* Portrait 3 — Neha Agarwal — synced to t3 scroll window */}
+            <motion.div
+              style={{ opacity: t3Op }}
+              className="absolute inset-0 pointer-events-none z-0"
+              aria-hidden="true"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center grayscale brightness-[0.18]"
+                style={{ backgroundImage: "url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=2400&auto=format&fit=crop')" }}
+              />
+              <div className="absolute inset-0 bg-[#F5F4F1]/70" />
+            </motion.div>
+
+            {/* Testimonial 1 — Kapildev Verma */}
+            <motion.div style={{ opacity: t1Op, filter: t1Blur, scale: t1Scale }} className="absolute max-w-5xl text-center px-4 z-10">
               <p className="font-serif text-2xl md:text-4xl lg:text-5xl italic leading-[1.3] text-foreground mb-10">
-                "Working with Harish has been one of the most transformative experiences of my life. Harish's approach is not formulaic—it's deeply personal, intuitive, and anchored in truth."
+                &ldquo;Working with Harish has been one of the most transformative experiences of my life. Harish&apos;s approach is not formulaic—it&apos;s deeply personal, intuitive, and anchored in truth.&rdquo;
               </p>
               <div className="w-[60px] h-[1px] bg-[#FFC908] mx-auto mb-6" />
               <span className="font-sans text-[10px] tracking-[0.4em] font-bold text-foreground uppercase block mb-1">Kapildev Verma</span>
               <span className="font-sans text-[9px] tracking-[0.2em] text-muted-foreground uppercase">Head, Client Servicing · India</span>
             </motion.div>
 
-            <motion.div style={{ opacity: t2Op, filter: t2Blur, scale: t2Scale }} className="absolute max-w-5xl text-center px-4">
+            {/* Testimonial 2 — M.R. */}
+            <motion.div style={{ opacity: t2Op, filter: t2Blur, scale: t2Scale }} className="absolute max-w-5xl text-center px-4 z-10">
               <p className="font-serif text-2xl md:text-4xl lg:text-5xl italic leading-[1.3] text-foreground mb-10">
-                "Harish has a remarkable ability to connect you with your inner wisdom, guiding you to answers you already have within. I've been able to unlock new levels of my vision."
+                &ldquo;Harish has a remarkable ability to connect you with your inner wisdom, guiding you to answers you already have within. I&apos;ve been able to unlock new levels of my vision.&rdquo;
               </p>
               <div className="w-[60px] h-[1px] bg-[#FFC908] mx-auto mb-6" />
               <span className="font-sans text-[10px] tracking-[0.4em] font-bold text-foreground uppercase block mb-1">M.R.</span>
               <span className="font-sans text-[9px] tracking-[0.2em] text-muted-foreground uppercase">Founder · US</span>
             </motion.div>
 
-            <motion.div style={{ opacity: t3Op, filter: t3Blur, scale: t3Scale }} className="absolute max-w-5xl text-center px-4">
+            {/* Testimonial 3 — Neha Agarwal */}
+            <motion.div style={{ opacity: t3Op, filter: t3Blur, scale: t3Scale }} className="absolute max-w-5xl text-center px-4 z-10">
               <p className="font-serif text-2xl md:text-4xl lg:text-5xl italic leading-[1.3] text-foreground mb-10">
-                "True to his name, Harish embodies the one who removes darkness, illusion, and all obstacles in the path of life and personal evolution."
+                &ldquo;True to his name, Harish embodies the one who removes darkness, illusion, and all obstacles in the path of life and personal evolution.&rdquo;
               </p>
               <div className="w-[60px] h-[1px] bg-[#FFC908] mx-auto mb-6" />
               <span className="font-sans text-[10px] tracking-[0.4em] font-bold text-foreground uppercase block mb-1">Neha Agarwal</span>
