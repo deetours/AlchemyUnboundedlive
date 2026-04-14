@@ -297,11 +297,20 @@ export default function HomePage() {
                 <div className="absolute top-1/2 left-0 w-full h-[4px] bg-[#946DE3] -rotate-1" />
              </div>
           </div>
-          {/* Mobile strikethroughs — contained, no overflow */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.04] pointer-events-none select-none px-6 md:hidden overflow-hidden">
-             <span className="font-serif text-4xl leading-none italic">Tactical Hacks.</span>
-             <span className="font-serif text-4xl leading-none italic mt-4">Morning Routines.</span>
-             <span className="font-serif text-4xl leading-none italic mt-4">Passive Listening.</span>
+          {/* Mobile strikethroughs — with purple strike lines matching desktop */}
+          <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.06] pointer-events-none select-none px-6 md:hidden overflow-hidden gap-6">
+             <div className="relative">
+               <span className="font-serif text-4xl leading-none italic">Tactical Hacks.</span>
+               <div className="absolute top-1/2 left-0 w-full h-[3px] bg-[#946DE3] -rotate-2 -translate-y-1/2" />
+             </div>
+             <div className="relative">
+               <span className="font-serif text-4xl leading-none italic">Morning Routines.</span>
+               <div className="absolute top-1/2 left-0 w-full h-[3px] bg-[#946DE3] rotate-1 -translate-y-1/2" />
+             </div>
+             <div className="relative">
+               <span className="font-serif text-4xl leading-none italic">Passive Listening.</span>
+               <div className="absolute top-1/2 left-0 w-full h-[3px] bg-[#946DE3] -rotate-1 -translate-y-1/2" />
+             </div>
           </div>
 
           <motion.div style={{ opacity: heroOpacity, filter: heroBlur }} className="max-w-6xl mx-auto space-y-10 md:space-y-12 text-center px-6 md:px-8 relative z-10">
