@@ -3,6 +3,12 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
+import { InlineWidget } from "react-calendly"
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONFIGURATION — Replace with your actual Calendly URL
+// ─────────────────────────────────────────────────────────────────────────────
+const CALENDLY_URL = "https://calendly.com/harish-alchemyunbounded/discovery"
 
 export default function BeginPage() {
   const [mounted, setMounted] = useState(false);
@@ -14,8 +20,13 @@ export default function BeginPage() {
   const [email, setEmail] = useState("");
   const [friction, setFriction] = useState("");
 
+  // Phase 4 affirmation visibility
+  const [showAffirmation1, setShowAffirmation1] = useState(false);
+  const [showAffirmation2, setShowAffirmation2] = useState(false);
+
   const step2Ref = useRef<HTMLDivElement>(null);
   const step3Ref = useRef<HTMLDivElement>(null);
+  const step4Ref = useRef<HTMLDivElement>(null);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true) }, []);
@@ -28,8 +39,8 @@ export default function BeginPage() {
     if (activeStep === 2 && step3Ref.current) {
       step3Ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
-    if (activeStep === 3 && endRef.current) {
-      endRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (activeStep === 3 && step4Ref.current) {
+      step4Ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [activeStep]);
 
@@ -38,16 +49,17 @@ export default function BeginPage() {
   const handleNext = (e: React.KeyboardEvent | React.MouseEvent, nextStep: number, val: string) => {
     if (val.trim() === "") return;
     if ('key' in e && e.key !== 'Enter') return;
-    e.preventDefault(); // prevent form submission or newlines
+    e.preventDefault();
     if (activeStep < nextStep) {
       setActiveStep(nextStep);
+      // Trigger affirmations with a short delay after step advances
+      if (nextStep === 1) setTimeout(() => setShowAffirmation1(true), 600);
+      if (nextStep === 2) setTimeout(() => setShowAffirmation2(true), 600);
     }
   };
 
-  const handleRelease = () => {
-    // In production, this would fire to an API endpoint
-    setIsSubmitted(true);
-  };
+  // Pre-filled Calendly URL with name + email from previous steps
+  const prefillCalendlyUrl = `${CALENDLY_URL}?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&hide_gdpr_banner=1&hide_event_type_details=1&background_color=F5F4F1&text_color=1A1A1A&primary_color=FFC908`
 
   return (
     <main className="bg-[#F5F4F1] min-h-screen text-foreground selection:bg-primary/30 relative font-sans">
@@ -114,6 +126,18 @@ export default function BeginPage() {
                    Press Enter ↵
                  </motion.button>
                )}
+               {/* PHASE 4: Progressive Affirmation after step 1 */}
+               <AnimatePresence>
+                 {showAffirmation1 && activeStep > 0 && (
+                   <motion.p
+                     initial={{ opacity: 0 }} animate={{ opacity: 0.45 }} exit={{ opacity: 0 }}
+                     transition={{ duration: 1, ease: "easeOut" }}
+                     className="font-serif italic text-base mt-6 text-foreground"
+                   >
+                     Good. I&apos;m here.
+                   </motion.p>
+                 )}
+               </AnimatePresence>
             </StepContainer>
 
             {/* STEP 2: CONTACT */}
@@ -144,6 +168,18 @@ export default function BeginPage() {
                      Press Enter ↵
                    </motion.button>
                  )}
+                 {/* PHASE 4: Progressive Affirmation after step 2 */}
+                 <AnimatePresence>
+                   {showAffirmation2 && activeStep > 1 && (
+                     <motion.p
+                       initial={{ opacity: 0 }} animate={{ opacity: 0.45 }} exit={{ opacity: 0 }}
+                       transition={{ duration: 1, ease: "easeOut" }}
+                       className="font-serif italic text-base mt-6 text-foreground"
+                     >
+                       I&apos;ll hold this carefully.
+                     </motion.p>
+                   )}
+                 </AnimatePresence>
               </StepContainer>
             </div>
 
@@ -170,11 +206,20 @@ export default function BeginPage() {
                      className="mt-16 flex flex-col items-center"
                      ref={endRef}
                    >
+                     {/* PHASE 3: Micro-testimonial whisper above CTA */}
+                     <motion.p
+                       initial={{ opacity: 0 }} animate={{ opacity: 0.4 }}
+                       transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+                       className="font-serif italic text-base mb-12 text-center text-foreground"
+                     >
+                       &ldquo;It was here that I found clarity.&rdquo; — Katy Haldiman
+                     </motion.p>
+
                      <p className="font-sans text-[9px] tracking-widest text-[#946DE3] uppercase mb-4">
                        If you are ready...
                      </p>
                      <button 
-                       onClick={handleRelease}
+                       onClick={() => setActiveStep(3)}
                        className="group flex flex-col items-center hover:scale-105 transition-transform duration-500"
                      >
                        <span className="font-sans text-[10px] tracking-[0.8em] uppercase text-foreground transition-all duration-700 font-bold mb-4">
@@ -184,6 +229,77 @@ export default function BeginPage() {
                      </button>
                    </motion.div>
                  )}
+                 {/* PHASE 4: Affirmation after step 3 submits */}
+                 <AnimatePresence>
+                   {activeStep === 2 && friction.trim().length > 10 && (
+                     <motion.p
+                       initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} exit={{ opacity: 0 }}
+                       transition={{ duration: 1.2, ease: "easeOut", delay: 0.8 }}
+                       className="font-serif italic text-base mt-8 text-center text-foreground"
+                     >
+                       This takes real courage.
+                     </motion.p>
+                   )}
+                 </AnimatePresence>
+              </StepContainer>
+            </div>
+
+            {/* ─────────────────────────────────────────────────────────────────────────
+                PHASE 1: STEP 4 — CALENDLY (The Appointment)
+                Exact same StepContainer animation. No new layout. Pure addition.
+            ───────────────────────────────────────────────────────────────────────── */}
+            <div ref={step4Ref}>
+              <StepContainer isActive={activeStep === 3} isVisible={activeStep >= 3}>
+                <div className="text-center mb-12">
+                  <h2 className="font-serif text-3xl md:text-5xl text-foreground leading-tight mb-4">
+                    One final act.
+                  </h2>
+                  <p className="font-sans text-[10px] tracking-[0.6em] uppercase text-muted-foreground">
+                    Choose your moment.
+                  </p>
+                </div>
+
+                {/* Calendly Inline Widget — pre-filled with name + email */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+                  className="w-full rounded-none overflow-hidden border border-foreground/10"
+                  style={{ minHeight: 660 }}
+                >
+                  <InlineWidget
+                    url={prefillCalendlyUrl}
+                    styles={{ height: '660px', width: '100%' }}
+                    prefill={{
+                      name: name,
+                      email: email,
+                    }}
+                    pageSettings={{
+                      backgroundColor: 'F5F4F1',
+                      hideEventTypeDetails: false,
+                      hideLandingPageDetails: false,
+                      primaryColor: 'FFC908',
+                      textColor: '1A1A1A',
+                    }}
+                  />
+                </motion.div>
+
+                {/* After Calendly — Soft Resolve */}
+                <motion.div
+                  initial={{ opacity: 0 }} animate={{ opacity: 0.5 }}
+                  transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
+                  className="text-center mt-12"
+                >
+                  <p className="font-serif italic text-sm text-foreground">
+                    A space is being prepared for you.
+                  </p>
+                  <button
+                    onClick={() => setIsSubmitted(true)}
+                    className="mt-8 font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    I have scheduled my session →
+                  </button>
+                </motion.div>
               </StepContainer>
             </div>
 
@@ -198,9 +314,12 @@ export default function BeginPage() {
             className="fixed inset-0 bg-[#F5F4F1] flex items-center justify-center z-50 px-6 text-center"
           >
             <div className="flex flex-col items-center">
-               <h1 className="font-serif text-3xl md:text-5xl text-foreground italic mb-12">
-                 It is done. We will speak soon.
+               <h1 className="font-serif text-3xl md:text-5xl text-foreground italic mb-4">
+                 It is done.
                </h1>
+               <p className="font-serif text-xl text-foreground/60 mb-12">
+                 Your session is held.
+               </p>
                <Link href="/" className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground hover:text-foreground hover:tracking-[0.5em] transition-all duration-1000">
                  Return Context
                </Link>

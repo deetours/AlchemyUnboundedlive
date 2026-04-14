@@ -157,8 +157,26 @@ function LifeCoachingInterior() {
                   </motion.p>
                </div>
             </div>
+
+            {/* PHASE 3: Micro-testimonial whisper — absolute, pointer-events-none, whispers from the corner */}
+            <motion.aside
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.3 }}
+              viewport={{ once: true, margin: "-20%" }}
+              transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+              className="absolute bottom-10 right-8 md:bottom-12 md:right-16 text-right pointer-events-none"
+            >
+              <p className="font-serif italic text-sm text-foreground leading-snug">
+                &ldquo;He saw what I could be.&rdquo;
+              </p>
+              <p className="font-sans text-[10px] tracking-widest uppercase text-muted-foreground mt-1">
+                — Emily Rose
+              </p>
+            </motion.aside>
+
         </div>
       </section>
+
 
       {/* ACT III: The Heroic Journey */}
       <section ref={r3} className="relative w-full h-[400vh] z-10 text-[#1A1A1A]">

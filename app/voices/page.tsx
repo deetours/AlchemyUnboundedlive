@@ -253,10 +253,11 @@ const ALL_VOICES = [
     id: `voice-${index}`,
     name: item.name,
     role: item.role,
+    category: item.category,
     path: getPathName(item.category),
     pullQuote: pullQuote.length < item.quote.length ? pullQuote : item.quote,
     fullReview: item.quote,
-    outcome: `Transformed space via ${getPathName(item.category)}`, // Optional synthetic outcome marker
+    outcome: `Transformed space via ${getPathName(item.category)}`,
     image: getPlaceholderImage(index)
   }
 });
@@ -264,9 +265,12 @@ const ALL_VOICES = [
 // Using a seeded sort to mix categories beautifully but consistently, favoring the longest most detailed reviews at the top
 ALL_VOICES.sort((a, b) => b.fullReview.length - a.fullReview.length);
 
+type FilterType = 'all' | 'life' | 'creativity' | 'movement';
+
 export default function VoicesPage() {
   const [mounted, setMounted] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(4); // the progressive limit
+  const [visibleCount, setVisibleCount] = useState(4);
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
   
   useEffect(() => { setMounted(true) }, [])
 
@@ -295,6 +299,35 @@ export default function VoicesPage() {
         </motion.p>
       </section>
 
+      {/* PHASE 2: CINEMATIC FILTER LENSES — Pure addition, no layout change */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
+        className="flex items-center justify-center gap-6 md:gap-10 pb-12 px-6"
+      >
+        {(['all', 'life', 'creativity', 'movement'] as FilterType[]).map((filter, i) => (
+          <span key={filter} className="flex items-center gap-6 md:gap-10">
+            {i > 0 && <span className="font-serif text-xl opacity-15 pointer-events-none select-none">·</span>}
+            <button
+              onClick={() => setActiveFilter(activeFilter === filter ? 'all' : filter)}
+              className={`font-serif italic text-xl transition-all duration-700 ease-[0.16,1,0.3,1] relative ${
+                activeFilter === filter
+                  ? 'opacity-100'
+                  : filter === 'all' && activeFilter === 'all'
+                  ? 'opacity-100'
+                  : 'opacity-35 hover:opacity-70'
+              }`}
+            >
+              {filter === 'all' ? 'all voices' : filter}
+              <span className={`absolute -bottom-1 left-0 h-[2px] bg-[#FFC908] transition-all duration-700 ${
+                activeFilter === filter ? 'w-full' : 'w-0'
+              }`} />
+            </button>
+          </span>
+        ))}
+      </motion.div>
+
       {/* ACT II: THE VIGNETTES (The Living Portraits - Progressive Reveal) */}
       <div className="flex flex-col gap-[30vh] pb-[10vh]">
         <AnimatePresence mode="popLayout">
@@ -302,8 +335,13 @@ export default function VoicesPage() {
             <motion.div
               key={voice.id}
               initial={{ opacity: 0, y: 100 }}
-              animate={{ opacity: 1, y: 0 }}
+              animate={{
+                opacity: activeFilter === 'all' || voice.category === activeFilter ? 1 : 0.08,
+                filter: activeFilter === 'all' || voice.category === activeFilter ? 'blur(0px)' : 'blur(3px)',
+                scale: activeFilter === 'all' || voice.category === activeFilter ? 1 : 0.98,
+              }}
               transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ pointerEvents: activeFilter === 'all' || voice.category === activeFilter ? 'auto' : 'none' }}
             >
               <VoiceVignette voice={voice} />
             </motion.div>
