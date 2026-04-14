@@ -147,35 +147,35 @@ export default function AboutPage() {
                <span className="font-serif text-[15rem] md:text-[25rem] leading-none whitespace-nowrap">LINEAGE</span>
             </motion.div>
 
-            <motion.h2 style={{ opacity: s4MainOp }} className="relative z-10 font-serif text-3xl md:text-5xl text-center mb-24">To guide others into the dark,<br />you must map it yourself.</motion.h2>
+            <motion.h2 style={{ opacity: s4MainOp }} className="relative z-10 font-serif text-3xl md:text-5xl text-center mb-12 md:mb-24">To guide others into the dark,<br />you must map it yourself.</motion.h2>
             
-            <div className="space-y-16">
+            <div className="space-y-8 md:space-y-16 relative z-10">
                <motion.div style={{ opacity: s4Sub1Op }} className="flex items-center gap-6">
                  <div className="w-2 h-2 rounded-full bg-[#FFC908]" />
-                 <p className="font-sans text-xs tracking-[0.4em] uppercase font-bold text-muted-foreground transition-all duration-700">Two decades of brutal internal work.</p>
+                 <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold text-muted-foreground transition-all duration-700">Two decades of brutal internal work.</p>
                </motion.div>
                
                <motion.div style={{ opacity: s4Sub2Op }} className="flex items-center gap-6">
                  <div className="w-2 h-2 rounded-full bg-[#FFC908]" />
-                 <p className="font-sans text-xs tracking-[0.4em] uppercase font-bold text-muted-foreground transition-all duration-700">Studying under masters of meaning:</p>
+                 <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase font-bold text-muted-foreground transition-all duration-700">Studying under masters of meaning:</p>
                </motion.div>
 
-               <div className="grid md:grid-cols-3 gap-8">
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
                   <motion.div style={{ opacity: s4Ref1Op }} className="border-l-2 border-primary/20 pl-6 py-2">
                      <p className="font-serif text-lg">Eric Maisel</p>
-                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Creativity</p>
+                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 md:mt-2">Creativity</p>
                   </motion.div>
                   <motion.div style={{ opacity: s4Ref2Op }} className="border-l-2 border-primary/20 pl-6 py-2">
                      <p className="font-serif text-lg">Leon VanderPol</p>
-                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Transformation</p>
+                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 md:mt-2">Transformation</p>
                   </motion.div>
                   <motion.div style={{ opacity: s4Ref3Op }} className="border-l-2 border-primary/20 pl-6 py-2">
                      <p className="font-serif text-lg">Fighting Monkey</p>
-                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-2">Development</p>
+                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1 md:mt-2">Development</p>
                   </motion.div>
                </div>
 
-               <motion.p style={{ opacity: s4EndOp }} className="font-serif text-xl italic text-muted-foreground text-center mt-24">Grounding the intuition in absolute rigor.</motion.p>
+               <motion.p style={{ opacity: s4EndOp }} className="font-serif text-lg md:text-xl italic text-muted-foreground text-center mt-12 md:mt-24">Grounding the intuition in absolute rigor.</motion.p>
             </div>
           </div>
         </StickyFrame>
