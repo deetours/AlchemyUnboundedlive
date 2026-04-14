@@ -155,9 +155,9 @@ export default function MovementArtsContent() {
       <section ref={r2} className="relative w-full h-[300vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12 bg-[#F5F4F1]">
           <div className="relative w-full max-w-7xl mx-auto flex items-center justify-center text-center">
-            <motion.div style={{ opacity: s2Op1, y: s2Y1 }} className="absolute">
-              <p className="font-serif text-[32px] md:text-6xl lg:text-8xl tracking-tight leading-none mb-8">
-                Because your body and mind are <br className="hidden lg:block" />
+            <motion.div style={{ opacity: s2Op1, y: s2Y1 }} className="absolute px-4">
+              <p className="font-serif text-[26px] md:text-6xl lg:text-8xl tracking-tight leading-snug mb-8">
+                Because your body and mind are{" "}
                 <span className="italic text-[#FFC908]">not meant to be obstacles in your life.</span>
               </p>
             </motion.div>
@@ -169,7 +169,7 @@ export default function MovementArtsContent() {
       <section ref={r3} className="relative w-full h-[600vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
-          {/* PHASE 6: Subtle kinetic body image — behind geometry, z-0, opacity whisper */}
+          {/* Background kinetic body image */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.05] mix-blend-multiply">
             <img 
               src="https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?q=60&w=2000&auto=format&fit=crop"
@@ -189,33 +189,38 @@ export default function MovementArtsContent() {
             <div className="absolute h-[120%] w-[1px] bg-[#1A1A1A]/5" />
           </motion.div>
 
-          {/* Absolute Fixed Headers & Footers */}
-          <div className="absolute inset-0 flex flex-col items-center justify-between py-[15vh] px-4 pointer-events-none z-10">
-            <motion.h2 style={{ opacity: s3Op1, filter: s3Blur1 }} className="text-center font-serif text-4xl md:text-6xl lg:text-8xl tracking-tight leading-none text-foreground bg-[#F5F4F1] px-8 rounded-full">
-              Do you wish to—
-            </motion.h2>
+          {/* Header — pinned to top, independent of footer */}
+          <motion.h2
+            style={{ opacity: s3Op1, filter: s3Blur1 }}
+            className="absolute top-[10vh] md:top-[15vh] left-1/2 -translate-x-1/2 w-full text-center font-serif text-3xl md:text-6xl lg:text-8xl tracking-tight leading-none text-foreground bg-[#F5F4F1] px-8 rounded-full pointer-events-none z-10"
+          >
+            Do you wish to—
+          </motion.h2>
 
-            <motion.p style={{ opacity: s3Op3, filter: s3Blur3 }} className="font-serif text-2xl md:text-3xl lg:text-4xl text-center leading-tight max-w-4xl text-[#1A1A1A] italic pt-8 md:pt-12 bg-[#F5F4F1] px-8 py-4 rounded-full">
-              Cultivate a practice that sparks joy, play, critical thinking, adaptability, and a profound love for life?
-            </motion.p>
-          </div>
+          {/* Footer — pinned to bottom, independent of header */}
+          <motion.p
+            style={{ opacity: s3Op3, filter: s3Blur3 }}
+            className="absolute bottom-[8vh] md:bottom-[12vh] left-1/2 -translate-x-1/2 w-full max-w-4xl text-center font-serif text-base md:text-3xl lg:text-4xl leading-snug text-[#1A1A1A] italic bg-[#F5F4F1] px-6 py-3 md:py-4 rounded-full pointer-events-none z-10"
+          >
+            Cultivate a practice that sparks joy, play, critical thinking, adaptability, and a profound love for life?
+          </motion.p>
 
-          {/* Scrolling Waterfall List */}
+          {/* Scrolling Waterfall List — clipped by overflow-hidden on parent */}
           <motion.div 
              style={{ y: s3ListY, opacity: s3ListOp }} 
              className="w-full absolute inset-0 flex items-center justify-center pointer-events-none z-20 px-6"
           >
-            <div className="flex flex-col gap-y-12 md:gap-y-16 text-center md:text-left max-w-4xl mx-auto">
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To foster deep and long-term health, fitness, vitality, and youthfulness.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To revitalize and nourish your joints, tissues, and organs from the inside out.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To develop strength, mobility, and conditioning as an interconnected whole.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To cultivate a loving relationship with your body and be comfortable in it.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To cultivate kinetic hygiene practices for better performance and graceful aging.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To heal chronic pains, dissolve tensions, and rehabilitate injuries.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To move beyond linear protocols and conventional workouts.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To explore any movement discipline without feeling restricted.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To establish deep connection and awareness with your body in its totality.</p>
-              <p className="font-serif text-[24px] md:text-4xl lg:text-5xl leading-tight font-bold opacity-90">To transform your physical body into a limitless asset.</p>
+            <div className="flex flex-col gap-y-8 md:gap-y-16 text-center md:text-left max-w-4xl mx-auto">
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To foster deep and long-term health, fitness, vitality, and youthfulness.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To revitalize and nourish your joints, tissues, and organs from the inside out.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To develop strength, mobility, and conditioning as an interconnected whole.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To cultivate a loving relationship with your body and be comfortable in it.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To cultivate kinetic hygiene practices for better performance and graceful aging.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To heal chronic pains, dissolve tensions, and rehabilitate injuries.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To move beyond linear protocols and conventional workouts.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To explore any movement discipline without feeling restricted.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To establish deep connection and awareness with your body in its totality.</p>
+              <p className="font-serif text-[19px] md:text-4xl lg:text-5xl leading-snug font-bold opacity-90">To transform your physical body into a limitless asset.</p>
             </div>
           </motion.div>
 
@@ -284,31 +289,31 @@ export default function MovementArtsContent() {
 
       {/* ACT V: The Embrace & Lineage */}
       <section ref={r5} className="relative w-full h-[400vh] z-10 bg-[#F5F4F1] border-t border-[#1A1A1A]/5">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-12 text-[#1A1A1A] bg-[#F5F4F1]">
-            <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-12 text-[#1A1A1A] bg-[#F5F4F1] overflow-hidden">
+            <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-24 items-start md:items-center">
                
                {/* Left Side: The Monolith Guarantee */}
                <div className="flex flex-col flex-1 pl-4 md:pl-0 border-l border-[#1A1A1A]/10 md:border-none">
-                  <motion.p style={{ opacity: s5Op1 }} className="font-serif text-2xl md:text-4xl lg:text-5xl leading-[1.3] mb-8">
+                  <motion.p style={{ opacity: s5Op1 }} className="font-serif text-base sm:text-xl md:text-3xl lg:text-4xl leading-[1.35] mb-4 md:mb-6">
                     Whether you are a professional seeking stress relief, a leader seeking higher focus, a seasoned athlete, a senior wanting to stay active, or a fitness novice...
                   </motion.p>
-                  <motion.p style={{ opacity: s5Op2 }} className="font-serif text-xl md:text-2xl lg:text-3xl leading-[1.4] opacity-70 italic">
+                  <motion.p style={{ opacity: s5Op2 }} className="font-serif text-sm sm:text-base md:text-xl lg:text-2xl leading-[1.5] opacity-70 italic">
                     I am here to meet you where you are and guide you in cultivating a profound and sustainable practice within the unique universe in which you operate.
                   </motion.p>
                </div>
 
                {/* Right Side: The Lineage */}
-               <div className="flex flex-col flex-1 border-l-2 border-[#1A1A1A]/20 pl-8 md:pl-16">
-                  <motion.div style={{ opacity: s5Op3 }} className="mb-12">
-                     <p className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 font-bold mb-4">The Research</p>
-                     <p className="font-serif text-lg leading-relaxed">
+               <div className="flex flex-col flex-1 border-l-2 border-[#1A1A1A]/20 pl-6 md:pl-16">
+                  <motion.div style={{ opacity: s5Op3 }} className="mb-6 md:mb-12">
+                     <p className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 font-bold mb-3 md:mb-4">The Research</p>
+                     <p className="font-serif text-sm md:text-lg leading-relaxed">
                        The material is largely drawn from the <span className="font-bold">Fighting Monkey</span> research, an applied practice for human development through movement founded by my teachers, Linda Kapetanea and Jozef Frucek since 2002.
                      </p>
                   </motion.div>
                   
                   <motion.div style={{ opacity: s5Op4 }}>
-                     <p className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 font-bold mb-4">The Synthesis</p>
-                     <p className="font-serif text-lg leading-relaxed">
+                     <p className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 font-bold mb-3 md:mb-4">The Synthesis</p>
+                     <p className="font-serif text-sm md:text-lg leading-relaxed">
                        I also share other creative practices and principles based on my own explorations and study of diverse movement arts over the past 10 years, tailored to your context.
                      </p>
                   </motion.div>
