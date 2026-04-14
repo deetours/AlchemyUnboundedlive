@@ -199,13 +199,6 @@ export default function AboutPage() {
       <section ref={act4Ref} className="relative w-full h-[400vh] bg-white">
         <StickyFrame className="pt-[72px] md:pt-0">
           <div className="max-w-4xl mx-auto w-full px-8 relative">
-            {/* LINEAGE ghost — size clamped for mobile to prevent horizontal overflow */}
-            <motion.div
-               style={{ y: s4GhostY, opacity: 0.04 }}
-               className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden"
-            >
-               <span className="font-serif text-[5rem] md:text-[20rem] leading-none whitespace-nowrap">LINEAGE</span>
-            </motion.div>
 
             <motion.h2 style={{ opacity: s4MainOp }} className="relative z-10 font-serif text-3xl md:text-5xl text-center mb-12 md:mb-24">
               To guide others into the dark,<br />you must map it yourself.
