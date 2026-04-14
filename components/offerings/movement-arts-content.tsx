@@ -97,6 +97,16 @@ export default function MovementArtsContent() {
       <section ref={r3} className="relative w-full h-[600vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
+          {/* PHASE 6: Subtle kinetic body image — behind geometry, z-0, opacity whisper */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.05] mix-blend-multiply">
+            <img 
+              src="https://images.unsplash.com/photo-1574680178050-55c6a6a96e0a?q=60&w=2000&auto=format&fit=crop"
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+
           {/* THE KINETIC ENGINE (Rotating Geometric Structure) */}
           <motion.div 
             style={{ scale: s3Scale, rotate: s3Rotate }}
@@ -156,31 +166,38 @@ export default function MovementArtsContent() {
               {[
                 {
                   title: "Fit for Life",
-                  desc: "Those seeking to foster long-term health, youthfulness, and well-being. Moving beyond quick fixes to cultivate a sustainable practice that revitalizes joints and organs."
+                  desc: "Those seeking to foster long-term health, youthfulness, and well-being. Moving beyond quick fixes to cultivate a sustainable practice that revitalizes joints and organs.",
+                  hint: "If your body feels like something to manage, not inhabit."
                 },
                 {
                   title: "Body-Mind-Heart Balance",
-                  desc: "Those looking to center themselves, cultivating inner silence and mindfulness through movement so they can meet everyday stressors with grace and equanimity."
+                  desc: "Those looking to center themselves, cultivating inner silence and mindfulness through movement so they can meet everyday stressors with grace and equanimity.",
+                  hint: "If you are physically active but internally depleted."
                 },
                 {
                   title: "Athletes, Movers & Shakers",
-                  desc: "Professional and hobbyist athletes seeking a sub-base of healthy physical development that supports them holistically to excel in their chosen disciplines."
+                  desc: "Professional and hobbyist athletes seeking a sub-base of healthy physical development that supports them holistically to excel in their chosen disciplines.",
+                  hint: "If you're training hard but something foundational feels missing."
                 },
                 {
                   title: "Artists, Creators & Mavericks",
-                  desc: "Those looking for a profound non-linear movement practice which supports doing what they do with vigour, bringing more play and imagination into their domains."
+                  desc: "Those looking for a profound non-linear movement practice which supports doing what they do with vigour, bringing more play and imagination into their domains.",
+                  hint: "If your body is the last frontier you haven't explored."
                 },
                 {
                   title: "Fitness Enthusiasts",
-                  desc: "Those jaded from conventional, linear exercise routines, seeking to explore a deeper, dynamic alternative that elevates their training into an art form."
+                  desc: "Those jaded from conventional, linear exercise routines, seeking to explore a deeper, dynamic alternative that elevates their training into an art form.",
+                  hint: "If the gym stopped feeling alive a long time ago."
                 },
                 {
                   title: "Coaches & Trainers",
-                  desc: "Owners of gyms and facilities seeking to infuse more depth, play, and creative ideas into their training, making them more alive for their clients."
+                  desc: "Owners of gyms and facilities seeking to infuse more depth, play, and creative ideas into their training, making them more alive for their clients.",
+                  hint: "If you want your sessions to feel less like protocol and more like poetry."
                 },
                 {
                   title: "Spiritual Seekers",
-                  desc: "Those on a quest to connect to the source within, opening pathways to higher observation. Embracing a practice that transcends physicality, yet grounded in the body."
+                  desc: "Those on a quest to connect to the source within, opening pathways to higher observation. Embracing a practice that transcends physicality, yet grounded in the body.",
+                  hint: "If you believe the body and spirit are not separate."
                 }
               ].map((item, i) => (
                 <div key={i} className="flex-shrink-0 w-[85vw] md:w-[32vw] bg-white border border-[#1A1A1A]/10 p-8 md:p-12 flex flex-col justify-between group hover:bg-[#FFC908] hover:text-[#1A1A1A] transition-colors duration-700 text-[#1A1A1A] shadow-sm hover:shadow-xl">
@@ -193,6 +210,12 @@ export default function MovementArtsContent() {
                    <p className="font-serif text-base md:text-lg opacity-80 leading-relaxed max-w-sm">
                       {item.desc}
                    </p>
+                   {/* PHASE 7: Hover micro-reveal */}
+                   <div className="overflow-hidden mt-6 pt-4 border-t border-[#1A1A1A]/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
+                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A]">
+                       {item.hint}
+                     </p>
+                   </div>
                 </div>
               ))}
            </motion.div>

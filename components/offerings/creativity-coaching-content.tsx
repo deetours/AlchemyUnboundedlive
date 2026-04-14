@@ -131,6 +131,16 @@ export default function CreativityCoachingContent() {
       <section ref={r3} className="relative w-full h-[500vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
+          {/* PHASE 6: Subtle editorial image — behind purple orb, z-0, opacity whisper */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.06] mix-blend-multiply">
+            <img 
+              src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=60&w=2000&auto=format&fit=crop"
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+
           {/* THE SIGNAL (Deep Background Light Engine) */}
           <motion.div 
             style={{ opacity: s3BgOp, scale: s3Scale }}
@@ -182,27 +192,33 @@ export default function CreativityCoachingContent() {
               {[
                 {
                   title: "Soul Driven & Conscious Creators",
-                  desc: "Those who have experienced success in their fields but desire to dream bigger and create deeper, more meaningful work from the depths of their soul."
+                  desc: "Those who have experienced success in their fields but desire to dream bigger and create deeper, more meaningful work from the depths of their soul.",
+                  hint: "If success feels hollow and something deeper is calling."
                 },
                 {
                   title: "Blocked Creatives",
-                  desc: "Those feeling blocked, stuck, frustrated, lost or uninspired. Those who wish to unblock themselves, reignite their spirit, and overcome fear, resistance, and procrastination."
+                  desc: "Those feeling blocked, stuck, frustrated, lost or uninspired. Those who wish to unblock themselves, reignite their spirit, and overcome fear, resistance, and procrastination.",
+                  hint: "If the work is there but you can't begin."
                 },
                 {
                   title: "Recovering Creatives",
-                  desc: "Those who had to give up creative dreams due to responsibilities. Those who have taken a long break. Those who are ready to reinvent themselves and start anew."
+                  desc: "Those who had to give up creative dreams due to responsibilities. Those who have taken a long break. Those who are ready to reinvent themselves and start anew.",
+                  hint: "If you put your creative self on hold — and miss them."
                 },
                 {
                   title: "Multi-Passionate Creatives",
-                  desc: "Those with multiple creative interests who lack clarity to bring passions together. Those who struggle with indecision and need to channel their diverse strengths powerfully."
+                  desc: "Those with multiple creative interests who lack clarity to bring passions together. Those who struggle with indecision and need to channel their diverse strengths powerfully.",
+                  hint: "If everything interests you but nothing has your full commitment."
                 },
                 {
                   title: "Skeptics & Curious Creatives",
-                  desc: "Those who think they don't have a creative bone in them. Those curious to explore their creative propensity, build confidence, and live as an artist in the whole sphere of life."
+                  desc: "Those who think they don't have a creative bone in them. Those curious to explore their creative propensity, build confidence, and live as an artist in the whole sphere of life.",
+                  hint: "If you've always believed creativity wasn't for you."
                 },
                 {
                   title: "Meaning Seekers",
-                  desc: "Those suffering an existential crisis or lack of meaning in their work or life. Those who wish to rejuvenate their journeys, rediscover their mojo and find new ways of creating meaning."
+                  desc: "Those suffering an existential crisis or lack of meaning in their work or life. Those who wish to rejuvenate their journeys, rediscover their mojo and find new ways of creating meaning.",
+                  hint: "If you're going through the motions but feeling none of it."
                 }
               ].map((item, i) => (
                 <div key={i} className="flex-shrink-0 w-[80vw] md:w-[35vw] bg-[#F5F4F1] border border-foreground/5 p-8 md:p-16 flex flex-col justify-between group hover:bg-[#946DE3] hover:text-white transition-colors duration-700">
@@ -215,6 +231,12 @@ export default function CreativityCoachingContent() {
                    <p className="font-serif text-lg md:text-xl opacity-70 leading-relaxed max-w-sm">
                       {item.desc}
                    </p>
+                   {/* PHASE 7: Hover micro-reveal */}
+                   <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
+                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase">
+                       {item.hint}
+                     </p>
+                   </div>
                 </div>
               ))}
            </motion.div>

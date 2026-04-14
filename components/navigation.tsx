@@ -54,7 +54,19 @@ export function Navigation() {
                 <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-primary transition-all duration-700 group-hover:w-full" />
               </Link>
             ))}
+
+            {/* PHASE 5: Availability Signal — pure addition, pointer-events-none, whisper only */}
+            <span
+              className="hidden lg:flex items-center gap-2 pointer-events-none select-none ml-4"
+              aria-hidden="true"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FFC908] animate-pulse" />
+              <span className="font-sans text-[9px] tracking-[0.35em] uppercase text-muted-foreground opacity-50">
+                Accepting clients
+              </span>
+            </span>
           </div>
+
 
           {/* Mobile Menu Button */}
           <button

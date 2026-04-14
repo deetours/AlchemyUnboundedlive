@@ -9,42 +9,50 @@ const ARCHETYPES = [
   {
     title: "Explorers",
     subtitle: "Unlock your Inner Potential",
-    desc: "Those daring to explore the depths of their being, challenge their limitations, and unlock their true potential."
+    desc: "Those daring to explore the depths of their being, challenge their limitations, and unlock their true potential.",
+    hint: "If you feel something bigger is waiting — but you can't name it yet."
   },
   {
     title: "Healing Voyagers",
     subtitle: "Let Go to Let Come",
-    desc: "Those ready for a voyage of deep healing, restoration and empowerment. Ready to rewrite their stories."
+    desc: "Those ready for a voyage of deep healing, restoration and empowerment. Ready to rewrite their stories.",
+    hint: "If you are tired of carrying what was never yours to carry."
   },
   {
     title: "Embracers of Individuality",
     subtitle: "Be the Bold and Authentic You",
-    desc: "Those aiming to shed self-doubt, fears and masks, live with confidence and clarity in alignment with their authentic self."
+    desc: "Those aiming to shed self-doubt, fears and masks, live with confidence and clarity in alignment with their authentic self.",
+    hint: "If you have been living for everyone except yourself."
   },
   {
     title: "Seekers of Balance",
     subtitle: "Find your Inner Equilibrium",
-    desc: "Those yearning to cultivate inner equilibrium in a fast-paced world, finding harmony and deeper connection."
+    desc: "Those yearning to cultivate inner equilibrium in a fast-paced world, finding harmony and deeper connection.",
+    hint: "If you succeed by day but feel hollow by night."
   },
   {
     title: "Trailblazing Leaders",
     subtitle: "Empower your Vision",
-    desc: "Visionaries and entrepreneurs who dream of creating initiatives that not only thrive but also align deeply with their souls."
+    desc: "Visionaries and entrepreneurs who dream of creating initiatives that not only thrive but also align deeply with their souls.",
+    hint: "If your vision is clear but your path forward isn't."
   },
   {
     title: "Adventurers of Change",
     subtitle: "Embrace Life's Transitions",
-    desc: "Those seeking to navigate transitions with resilience, uncovering the significance and opportunities they bring."
+    desc: "Those seeking to navigate transitions with resilience, uncovering the significance and opportunities they bring.",
+    hint: "If you are standing at a threshold you didn't choose."
   },
   {
     title: "Spiritual Seekers",
     subtitle: "Elevate your Consciousness",
-    desc: "Those on a quest to connect to the source within, moving beyond limiting ego patterns into direct experience."
+    desc: "Those on a quest to connect to the source within, moving beyond limiting ego patterns into direct experience.",
+    hint: "If you sense there is something much deeper to return to."
   },
   {
     title: "Meaning Seekers",
     subtitle: "Live a Purposeful Life",
-    desc: "Those yearning to live a vital life fueled by meaning, seeking a guiding light to illuminate their unique path."
+    desc: "Those yearning to live a vital life fueled by meaning, seeking a guiding light to illuminate their unique path.",
+    hint: "If the question 'is this all there is?' keeps returning."
   }
 ]
 
@@ -182,6 +190,16 @@ function LifeCoachingInterior() {
       <section ref={r3} className="relative w-full h-[400vh] z-10 text-[#1A1A1A]">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
           
+          {/* PHASE 6: Subtle editorial image — absolute, z-0, below Solar Corona orbs */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-[0.07] mix-blend-multiply">
+            <img 
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=60&w=2000&auto=format&fit=crop"
+              alt=""
+              aria-hidden="true"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+
           {/* THE SOLAR CORONA (Deep Background Light Engine) */}
           <motion.div 
             style={{ opacity: s3BgOp, scale: s3Scale }}
@@ -224,6 +242,12 @@ function LifeCoachingInterior() {
                    <h3 className="font-serif text-3xl md:text-4xl mb-4">{arch.title}</h3>
                    <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FFC908] mb-8 group-hover:text-white transition-colors duration-500">{arch.subtitle}</h4>
                    <p className="font-serif text-lg md:text-xl leading-relaxed opacity-70 group-hover:opacity-100">{arch.desc}</p>
+                   {/* PHASE 7: Hover micro-reveal */}
+                   <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700 ease-[0.16,1,0.3,1]">
+                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase">
+                       {arch.hint}
+                     </p>
+                   </div>
                 </div>
              ))}
            </motion.div>
