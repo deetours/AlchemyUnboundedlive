@@ -125,6 +125,19 @@ function LifeCoachingInterior() {
 
   return (
     <div className="bg-[#F5F4F1] min-h-screen relative text-foreground selection:bg-[#FFC908]">
+
+      {/* ── MOBILE STICKY CTA BAR ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex border-t border-foreground/10 bg-[#F5F4F1]/95 backdrop-blur-md" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <Link href="/begin" className="flex-1 flex flex-col items-center justify-center py-4 active:bg-foreground/5 transition-colors">
+          <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-muted-foreground font-bold">Begin Here</span>
+          <span className="font-serif text-base mt-0.5">→ Conversation</span>
+        </Link>
+        <div className="w-[1px] bg-foreground/10 my-3" />
+        <Link href="/offerings" className="flex-1 flex flex-col items-center justify-center py-4 active:bg-foreground/5 transition-colors">
+          <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-muted-foreground font-bold">All Paths</span>
+          <span className="font-serif text-base mt-0.5">← The Descent</span>
+        </Link>
+      </div>
       
       {/* --- SCENES --- */}
 
@@ -137,8 +150,8 @@ function LifeCoachingInterior() {
           >
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#946DE3] rounded-full blur-[100px] opacity-20 pointer-events-none" />
             <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase text-muted-foreground font-bold mb-8 md:mb-12">Transformational Life Coaching</p>
-            <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tighter mb-12">Where the ordinary transcends into the <span className="italic text-[#946DE3]">extraordinary.</span></h1>
-            <p className="font-serif text-xl md:text-2xl text-muted-foreground max-w-2xl leading-snug">And the mundane transforms into magic.</p>
+            <h1 className="font-serif text-[2.8rem] sm:text-5xl md:text-7xl lg:text-8xl leading-[0.92] tracking-tighter mb-8 md:mb-12">Where the ordinary transcends into the <span className="italic text-[#946DE3]">extraordinary.</span></h1>
+            <p className="font-serif text-lg md:text-2xl text-muted-foreground max-w-2xl leading-snug">And the mundane transforms into magic.</p>
           </motion.div>
         </div>
       </section>
@@ -227,9 +240,12 @@ function LifeCoachingInterior() {
       {/* ACT IV: The Archetypes Filmstrip */}
       <section ref={r4} className="relative w-full h-[600vh] z-20 bg-white">
         <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-           <div className="text-center mb-16 px-6">
-              <h2 className="font-serif text-5xl md:text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
-              <p className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground font-bold">Scroll through to explore.</p>
+           <div className="text-center mb-12 md:mb-16 px-6">
+              <h2 className="font-serif text-4xl md:text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
+              <p className="font-sans text-[11px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-muted-foreground font-bold">
+                <span className="md:hidden">Swipe to explore.</span>
+                <span className="hidden md:inline">Scroll through to explore.</span>
+              </p>
            </div>
 
            {/* The Horizontal Filmstrip Container */}
@@ -238,7 +254,7 @@ function LifeCoachingInterior() {
              className="flex gap-8 px-[10vw] items-center w-max"
            >
              {ARCHETYPES.map((arch, i) => (
-                <div key={i} className="min-w-[70vw] md:min-w-[40vw] lg:min-w-[25vw] h-full flex flex-col p-12 border border-foreground/10 bg-[#F5F4F1] hover:bg-[#946DE3] hover:text-white transition-all duration-700 rounded-xl group shrink-0">
+                <div key={i} className="min-w-[82vw] md:min-w-[40vw] lg:min-w-[25vw] h-full flex flex-col p-8 md:p-12 border border-foreground/10 bg-[#F5F4F1] hover:bg-[#946DE3] hover:text-white transition-all duration-700 rounded-xl group shrink-0">
                    <h3 className="font-serif text-3xl md:text-4xl mb-4">{arch.title}</h3>
                    <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FFC908] mb-8 group-hover:text-white transition-colors duration-500">{arch.subtitle}</h4>
                    <p className="font-serif text-lg md:text-xl leading-relaxed opacity-70 group-hover:opacity-100">{arch.desc}</p>
@@ -256,39 +272,39 @@ function LifeCoachingInterior() {
 
       {/* ACT V: The Monolith Containers */}
       <section ref={r5} className="relative w-full h-[400vh] z-10 bg-[#F5F4F1]">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-6 md:px-12">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden px-5 md:px-12">
            <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center">
-              <motion.h2 style={{ opacity: s5OpMain }} className="font-serif text-4xl md:text-6xl text-center mb-24 tracking-tighter">The Containers</motion.h2>
+              <motion.h2 style={{ opacity: s5OpMain }} className="font-serif text-3xl md:text-6xl text-center mb-10 md:mb-24 tracking-tighter">The Containers</motion.h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full">
-                 <motion.div style={{ y: s5Card1Y, opacity: s5Card1Op }} className="flex flex-col border-t border-[#1A1A1A]/20 pt-8">
-                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-muted-foreground mb-4">Short-Term</p>
-                    <p className="font-serif text-4xl mb-8">6 Weeks</p>
-                    <ul className="space-y-4 font-serif text-lg opacity-80 mb-12">
-                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span> Six 75-minute sessions</li>
-                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span> One 60-minute integration</li>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 w-full">
+                 <motion.div style={{ y: s5Card1Y, opacity: s5Card1Op }} className="flex flex-col border-t border-[#1A1A1A]/20 pt-6 md:pt-8">
+                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-muted-foreground mb-3 md:mb-4">Short-Term</p>
+                    <p className="font-serif text-3xl md:text-4xl mb-5 md:mb-8">6 Weeks</p>
+                    <ul className="space-y-3 md:space-y-4 font-serif text-base md:text-lg opacity-80 mb-8 md:mb-12">
+                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span>Six 75-minute sessions</li>
+                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span>One 60-minute integration</li>
                     </ul>
-                    <p className="font-serif text-xl mt-auto border-t border-foreground/10 pt-4">$750 USD</p>
+                    <p className="font-serif text-lg md:text-xl mt-auto border-t border-foreground/10 pt-4">$750 USD</p>
                  </motion.div>
 
-                 <motion.div style={{ y: s5Card2Y, opacity: s5Card2Op }} className="flex flex-col border-t border-[#946DE3] pt-8">
-                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-[#946DE3] mb-4">Deep Dive</p>
-                    <p className="font-serif text-4xl mb-8">3–6 Months</p>
-                    <ul className="space-y-4 font-serif text-lg opacity-80 mb-12">
-                       <li className="flex gap-4"><span className="text-[#946DE3]">—</span> Twelve 75-minute sessions</li>
-                       <li className="flex gap-4"><span className="text-[#946DE3]">—</span> Three monthly check-ins</li>
+                 <motion.div style={{ y: s5Card2Y, opacity: s5Card2Op }} className="flex flex-col border-t border-[#946DE3] pt-6 md:pt-8">
+                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-[#946DE3] mb-3 md:mb-4">Deep Dive</p>
+                    <p className="font-serif text-3xl md:text-4xl mb-5 md:mb-8">3–6 Months</p>
+                    <ul className="space-y-3 md:space-y-4 font-serif text-base md:text-lg opacity-80 mb-8 md:mb-12">
+                       <li className="flex gap-4"><span className="text-[#946DE3]">—</span>Twelve 75-minute sessions</li>
+                       <li className="flex gap-4"><span className="text-[#946DE3]">—</span>Three monthly check-ins</li>
                     </ul>
-                    <p className="font-serif text-xl mt-auto border-t border-foreground/10 pt-4">$1,500 USD</p>
+                    <p className="font-serif text-lg md:text-xl mt-auto border-t border-foreground/10 pt-4">$1,500 USD</p>
                  </motion.div>
 
-                 <motion.div style={{ y: s5Card3Y, opacity: s5Card3Op }} className="flex flex-col border-t border-[#1A1A1A]/20 pt-8">
-                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-muted-foreground mb-4">The Arc</p>
-                    <p className="font-serif text-4xl mb-8">1 Year</p>
-                    <ul className="space-y-4 font-serif text-lg opacity-80 mb-12">
-                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span> Twenty 75-minute sessions</li>
-                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span> Continuous priority access</li>
+                 <motion.div style={{ y: s5Card3Y, opacity: s5Card3Op }} className="flex flex-col border-t border-[#1A1A1A]/20 pt-6 md:pt-8">
+                    <p className="font-sans text-xs tracking-[0.3em] uppercase font-bold text-muted-foreground mb-3 md:mb-4">The Arc</p>
+                    <p className="font-serif text-3xl md:text-4xl mb-5 md:mb-8">1 Year</p>
+                    <ul className="space-y-3 md:space-y-4 font-serif text-base md:text-lg opacity-80 mb-8 md:mb-12">
+                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span>Twenty 75-minute sessions</li>
+                       <li className="flex gap-4"><span className="text-[#FFC908]">—</span>Continuous priority access</li>
                     </ul>
-                    <p className="font-serif text-xl mt-auto border-t border-foreground/10 pt-4">$2,500 USD</p>
+                    <p className="font-serif text-lg md:text-xl mt-auto border-t border-foreground/10 pt-4">$2,500 USD</p>
                  </motion.div>
               </div>
            </div>
@@ -296,18 +312,21 @@ function LifeCoachingInterior() {
       </section>
 
       {/* OUTRO */}
-      <section className="relative z-10 py-48 px-8 text-center bg-white border-t border-foreground/5">
-        <div className="flex flex-col items-center justify-center">
-            <h2 className="font-serif text-4xl md:text-6xl mb-16 tracking-tight">Ready to begin the journey?</h2>
+      <section className="relative z-10 py-24 md:py-48 px-8 text-center bg-white border-t border-foreground/5 pb-28 md:pb-24">
+        <div className="flex flex-col items-center justify-center gap-8">
+            <h2 className="font-serif text-3xl md:text-6xl tracking-tight">Ready to begin the journey?</h2>
             <Link href="/begin" className="group">
               <div className="flex flex-col items-center">
-                <span className="font-sans text-[10px] tracking-[0.8em] uppercase text-muted-foreground group-hover:text-foreground transition-all duration-700 font-bold mb-4">
+                <span className="font-sans text-[11px] tracking-[0.6em] uppercase text-muted-foreground group-hover:text-foreground transition-all duration-700 font-bold mb-4">
                   INITIATE THE DIALOGUE
                 </span>
                 <div 
                   className="w-full h-[2px] bg-[#FFC908] shadow-[0_0_15px_rgba(255,201,8,0.5)] transition-all duration-500 scale-x-50 group-hover:scale-x-100"
                 />
               </div>
+            </Link>
+            <Link href="/offerings" className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-500">
+              ← Explore all paths
             </Link>
         </div>
       </section>

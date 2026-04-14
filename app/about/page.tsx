@@ -214,9 +214,9 @@ export default function AboutPage() {
            </div>
 
            <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-8">
-              <div className="w-full max-w-6xl grid grid-cols-2 gap-24 items-center">
-                <motion.p style={{ opacity: s6T1Op }} className="font-serif text-3xl md:text-5xl text-foreground text-left italic">No expectations.</motion.p>
-                <motion.p style={{ opacity: s6T2Op }} className="font-serif text-3xl md:text-5xl text-foreground text-right italic">No performance.</motion.p>
+              <div className="w-full max-w-6xl flex flex-col md:grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+                <motion.p style={{ opacity: s6T1Op }} className="font-serif text-2xl sm:text-3xl md:text-5xl text-foreground text-center md:text-left italic">No expectations.</motion.p>
+                <motion.p style={{ opacity: s6T2Op }} className="font-serif text-2xl sm:text-3xl md:text-5xl text-foreground text-center md:text-right italic">No performance.</motion.p>
               </div>
 
               <div className="absolute bottom-24 flex flex-col items-center space-y-12">

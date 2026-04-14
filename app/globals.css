@@ -86,18 +86,40 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: transparent;
   }
   body {
     @apply bg-background text-foreground;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Added smooth scrolling and selection styles */
+  /* Smooth scrolling and selection */
   html {
     scroll-behavior: smooth;
+    /* iOS momentum scrolling */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Safe area padding for notched iPhones */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+  .safe-top {
+    padding-top: env(safe-area-inset-top, 0px);
   }
 
   ::selection {
     background: rgba(244, 180, 0, 0.25);
     color: #1A1A1A;
+  }
+
+  /* Mobile: prevent text from being too wide for breathing room */
+  @media (max-width: 768px) {
+    .font-serif {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   }
 }

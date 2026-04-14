@@ -12,6 +12,7 @@ type PathID = "descent" | "signal" | "vessel" | null;
 const PATHS = {
   descent: {
     title: "THE DESCENT",
+    word: "Descent",
     subtitle: "Inner Architecture & Identity Transition",
     copy1: "We do not fix what is broken. We examine the patterns shaping your choices.",
     copy2: "For those navigating identity collapse, life transition, or the tension between who you are and who you must become.",
@@ -20,10 +21,14 @@ const PATHS = {
       "Mapping the emotional architecture",
       "Moving from external pressure to inner clarity"
     ],
-    note: "This is not advice. This is guided self-discovery and realignment."
+    note: "This is not advice. This is guided self-discovery and realignment.",
+    href: "/offerings/life-coaching",
+    hrefLabel: "Explore The Descent",
+    color: "#946DE3"
   },
   signal: {
     title: "THE SIGNAL",
+    word: "Signal",
     subtitle: "Creative Integrity & Authentic Resonance",
     copy1: "Creative work is not content. It is signal.",
     copy2: "For makers and creators severed from their authentic voice by algorithmic pressure and performance exhaustion.",
@@ -32,10 +37,14 @@ const PATHS = {
       "Building sustainable visibility",
       "Monetization that respects the nervous system"
     ],
-    note: "This is not a content strategy. This is embodied creative alignment."
+    note: "This is not a content strategy. This is embodied creative alignment.",
+    href: "/offerings/creativity-coaching",
+    hrefLabel: "Explore The Signal",
+    color: "#946DE3"
   },
   vessel: {
     title: "THE VESSEL",
+    word: "Vessel",
     subtitle: "Movement Arts & Somatic Intelligence",
     copy1: "The body stores what the mind forgets.",
     copy2: "For those seeking to build nervous system resilience and emotional intelligence through rigorous physical embodiment.",
@@ -44,7 +53,10 @@ const PATHS = {
       "Releasing stored survival patterns",
       "Integration through complex coordination"
     ],
-    note: "This is not fitness. This is embodiment training."
+    note: "This is not fitness. This is embodiment training.",
+    href: "/offerings/movement-arts",
+    hrefLabel: "Explore The Vessel",
+    color: "#FFC908"
   }
 }
 
@@ -52,6 +64,8 @@ export default function PathsPage() {
   const [mounted, setMounted] = useState(false)
   const [hoveredPath, setHoveredPath] = useState<PathID>(null)
   const [selectedPath, setSelectedPath] = useState<PathID>(null)
+  // Mobile accordion state — separate from desktop selection
+  const [expandedMobile, setExpandedMobile] = useState<PathID>(null)
   
   useEffect(() => { setMounted(true) }, [])
 
@@ -61,8 +75,124 @@ export default function PathsPage() {
     <main className="bg-[#F5F4F1] min-h-screen text-foreground selection:bg-primary/30 flex flex-col overflow-x-hidden">
       <Navigation />
 
-      {/* --- THE CROSSROADS EXPERIENCE --- */}
-      <section className="flex-grow relative w-full pt-32 pb-32 flex flex-col items-center justify-center min-h-screen">
+      {/* ─── MOBILE LAYOUT (hidden on md+) ─── */}
+      <section className="md:hidden flex-grow w-full pt-28 pb-16 px-5 flex flex-col gap-0">
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h1 className="font-serif text-4xl text-foreground mb-3">The Crossroads</h1>
+          <p className="font-sans text-[10px] tracking-[0.5em] text-muted-foreground uppercase">Choose your direction</p>
+        </div>
+
+        {/* Accordion Paths */}
+        <div className="flex flex-col divide-y divide-foreground/10 border-y border-foreground/10">
+          {(["descent", "signal", "vessel"] as PathID[]).map((pathId) => {
+            const path = PATHS[pathId!]
+            const isOpen = expandedMobile === pathId
+
+            return (
+              <div key={pathId}>
+                {/* Path Header Row */}
+                <button
+                  onClick={() => setExpandedMobile(isOpen ? null : pathId)}
+                  className="w-full flex items-center justify-between py-6 text-left group"
+                >
+                  <span className={`font-serif text-4xl tracking-tighter transition-all duration-500 ${isOpen ? "italic" : ""}`}
+                    style={{ color: isOpen ? path.color : undefined }}>
+                    {path.word}
+                  </span>
+                  <motion.span
+                    animate={{ rotate: isOpen ? 45 : 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="text-2xl font-light text-muted-foreground ml-4 shrink-0"
+                  >
+                    +
+                  </motion.span>
+                </button>
+
+                {/* Accordion Content */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pb-8 space-y-6">
+                        {/* Yellow/Purple accent line */}
+                        <div className="h-[2px] w-12" style={{ backgroundColor: path.color }} />
+
+                        <p className="font-sans text-[10px] tracking-[0.4em] uppercase font-bold"
+                          style={{ color: path.color }}>
+                          {path.subtitle}
+                        </p>
+
+                        <p className="font-serif text-2xl leading-snug text-foreground">
+                          {path.copy1}
+                        </p>
+                        <p className="font-serif text-base text-muted-foreground italic leading-relaxed">
+                          {path.copy2}
+                        </p>
+
+                        <ul className="space-y-3 pt-2">
+                          {path.bullets.map((b, i) => (
+                            <li key={i} className="flex gap-3 items-start">
+                              <span className="mt-1.5 shrink-0" style={{ color: path.color }}>•</span>
+                              <span className="font-sans text-sm text-foreground/80 leading-relaxed">{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <p className="font-serif text-sm text-foreground/50 italic border-l-2 pl-4 py-1"
+                          style={{ borderColor: path.color + "50" }}>
+                          {path.note}
+                        </p>
+
+                        {/* CTA — links to specific service */}
+                        <div className="pt-4 flex flex-col gap-5">
+                          <Link
+                            href={path.href}
+                            className="group inline-flex items-center gap-3 py-4 active:opacity-70 transition-opacity"
+                          >
+                            <span className="font-sans text-[11px] tracking-[0.5em] uppercase font-bold text-foreground">
+                              {path.hrefLabel}
+                            </span>
+                            <motion.span
+                              initial={{ x: 0 }}
+                              whileHover={{ x: 4 }}
+                              className="text-sm"
+                              style={{ color: path.color }}
+                            >→</motion.span>
+                          </Link>
+                          <div className="h-[1px] w-full bg-foreground/10" />
+                          <Link
+                            href="/begin"
+                            className="group inline-flex flex-col w-max"
+                          >
+                            <span className="font-sans text-[10px] tracking-[0.5em] uppercase text-muted-foreground font-bold mb-2">
+                              → Begin a conversation
+                            </span>
+                            <div className="h-[1px] w-full bg-foreground/15" />
+                          </Link>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Global note */}
+        <p className="font-sans text-[9px] tracking-widest text-muted-foreground uppercase leading-relaxed mt-10 px-1">
+          Investment is determined during our alignment dialogue. These containers are intimately scale-limited to protect the integrity of the work.
+        </p>
+      </section>
+
+      {/* ─── DESKTOP LAYOUT (hidden on mobile) ─── */}
+      <section className="hidden md:flex flex-grow relative w-full pt-32 pb-32 flex-col items-center justify-center min-h-screen">
         
         {/* Intro Text (Fades out when a path is selected) */}
         <AnimatePresence>
@@ -80,21 +210,20 @@ export default function PathsPage() {
           )}
         </AnimatePresence>
 
-        {/* The Path Options (Vertical Typography) */}
-        <div className={`relative w-full max-w-7xl mx-auto px-8 flex ${selectedPath ? 'flex-row' : 'flex-col md:flex-row'} items-center justify-center gap-12 md:gap-24 transition-all duration-1000 z-20 h-full`}>
+        {/* The Path Options */}
+        <div className={`relative w-full max-w-7xl mx-auto px-8 flex ${selectedPath ? 'flex-row' : 'flex-row'} items-center justify-center gap-24 transition-all duration-1000 z-20 h-full`}>
           
           {(["descent", "signal", "vessel"] as PathID[]).map((pathId) => {
             const isHovered = hoveredPath === pathId;
             const isSelected = selectedPath === pathId;
             const isAnotherSelected = selectedPath !== null && selectedPath !== pathId;
             
-            // If another path is selected, hide this one entirely
             if (isAnotherSelected) return null;
 
             return (
               <motion.div
                 key={pathId}
-                layoutId={`path-${pathId}`}
+                layoutId={`path-desktop-${pathId}`}
                 onMouseEnter={() => !selectedPath && setHoveredPath(pathId)}
                 onMouseLeave={() => !selectedPath && setHoveredPath(null)}
                 onClick={() => setSelectedPath(pathId)}
@@ -111,7 +240,7 @@ export default function PathsPage() {
                   ${isSelected ? "text-5xl md:text-7xl lg:text-8xl text-foreground leading-none" : "text-4xl md:text-6xl lg:text-7xl text-foreground/80"}
                   ${isHovered && !selectedPath ? "text-[#946DE3]" : ""}
                 `}>
-                  {PATHS[pathId!].title.split(' ')[1]} {/* Just the word DESCENT, SIGNAL, VESSEL */}
+                  {PATHS[pathId!].word}
                 </h2>
                 
                 {/* Back button when selected */}
@@ -175,15 +304,23 @@ export default function PathsPage() {
                      ))}
                    </ul>
 
-                   <div className="pt-12 border-t border-foreground/10 space-y-12">
+                   <div className="pt-12 border-t border-foreground/10 space-y-8">
                      <p className="font-serif text-lg text-foreground/60 italic border-l-2 border-[#946DE3]/30 pl-4 py-2">
                        {PATHS[selectedPath].note}
                      </p>
 
                      <div className="flex flex-col space-y-6">
+                       {/* ── Link to the specific service page ── */}
+                       <Link href={PATHS[selectedPath].href} className="group inline-flex flex-col w-max">
+                         <span className="font-sans text-xs tracking-[0.6em] uppercase text-[#946DE3] group-hover:text-foreground transition-colors duration-500 font-bold mb-2">
+                           → {PATHS[selectedPath].hrefLabel}
+                         </span>
+                         <div className="h-[1px] w-full bg-[#946DE3]/30 group-hover:bg-foreground/30 transition-colors duration-500" />
+                       </Link>
+
                        <Link href="/begin" className="group inline-flex flex-col w-max">
                          <span className="font-sans text-xs tracking-[0.6em] uppercase text-foreground group-hover:text-[#946DE3] transition-colors duration-500 font-bold mb-2">
-                           → I am ready for this path
+                           → Begin a conversation
                          </span>
                          <div className="h-[1px] w-full bg-foreground/20 group-hover:bg-[#946DE3] transition-colors duration-500" />
                        </Link>

@@ -112,7 +112,7 @@ export default function BeginPage() {
                    onKeyDown={e => handleNext(e, 1, name)}
                    onFocus={() => setActiveStep(0)}
                    placeholder="Your Name"
-                   className="w-full bg-transparent border-none outline-none font-serif text-4xl md:text-6xl text-foreground placeholder:text-foreground/10 focus:ring-0 leading-none pb-4"
+                   className="w-full bg-transparent border-none outline-none font-serif text-3xl md:text-6xl text-foreground placeholder:text-foreground/10 focus:ring-0 leading-none pb-4"
                  />
                  <div className="absolute bottom-0 left-0 h-[1px] w-full bg-foreground/10" />
                  <div className={`absolute bottom-0 left-0 h-[2px] bg-[#FFC908] transition-all duration-700 ease-out ${activeStep === 0 ? 'w-full' : 'w-0'}`} />
@@ -154,7 +154,7 @@ export default function BeginPage() {
                      onKeyDown={e => handleNext(e, 2, email)}
                      onFocus={() => setActiveStep(1)}
                      placeholder="Your Email"
-                     className="w-full bg-transparent border-none outline-none font-serif text-3xl md:text-5xl text-foreground placeholder:text-foreground/10 focus:ring-0 leading-none pb-4"
+                     className="w-full bg-transparent border-none outline-none font-serif text-2xl md:text-5xl text-foreground placeholder:text-foreground/10 focus:ring-0 leading-none pb-4"
                    />
                    <div className="absolute bottom-0 left-0 h-[1px] w-full bg-foreground/10" />
                    <div className={`absolute bottom-0 left-0 h-[2px] bg-[#FFC908] transition-all duration-700 ease-out ${activeStep === 1 ? 'w-full' : 'w-0'}`} />
@@ -265,11 +265,11 @@ export default function BeginPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                   className="w-full rounded-none overflow-hidden border border-foreground/10"
-                  style={{ minHeight: 660 }}
+                  style={{ minHeight: 'clamp(560px, 80vh, 700px)' }}
                 >
                   <InlineWidget
                     url={prefillCalendlyUrl}
-                    styles={{ height: '660px', width: '100%' }}
+                    styles={{ height: 'clamp(560px, 80vh, 700px)', width: '100%' }}
                     prefill={{
                       name: name,
                       email: email,

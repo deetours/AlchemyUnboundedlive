@@ -304,14 +304,14 @@ export default function VoicesPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-        className="flex items-center justify-center gap-6 md:gap-10 pb-12 px-6"
+        className="flex flex-wrap items-center justify-center gap-4 md:gap-10 pb-12 px-6"
       >
         {(['all', 'life', 'creativity', 'movement'] as FilterType[]).map((filter, i) => (
-          <span key={filter} className="flex items-center gap-6 md:gap-10">
-            {i > 0 && <span className="font-serif text-xl opacity-15 pointer-events-none select-none">·</span>}
+          <span key={filter} className="flex items-center gap-4 md:gap-10">
+            {i > 0 && <span className="font-serif text-xl opacity-15 pointer-events-none select-none hidden md:inline">·</span>}
             <button
               onClick={() => setActiveFilter(activeFilter === filter ? 'all' : filter)}
-              className={`font-serif italic text-xl transition-all duration-700 ease-[0.16,1,0.3,1] relative ${
+              className={`font-serif italic text-lg md:text-xl transition-all duration-700 ease-[0.16,1,0.3,1] relative ${
                 activeFilter === filter
                   ? 'opacity-100'
                   : filter === 'all' && activeFilter === 'all'
@@ -444,11 +444,15 @@ function VoiceVignette({ voice }: { voice: typeof ALL_VOICES[0] }) {
                   opacity: { duration: 1 }
                 }}
                 viewport={{ once: true, margin: "-20%" }}
-                className="absolute inset-0 flex items-center justify-center p-8 md:p-16 text-center z-10"
+                className="absolute inset-0 flex flex-col items-center justify-center p-6 md:p-16 text-center z-10"
               >
-                <h3 className="font-serif text-3xl md:text-5xl lg:text-5xl text-white leading-tight drop-shadow-2xl">
+                <h3 className="font-serif text-2xl md:text-5xl lg:text-5xl text-white leading-tight drop-shadow-2xl">
                   "{voice.pullQuote}"
                 </h3>
+                {/* Mobile tap hint — shows only on touch devices */}
+                <p className="mt-6 font-sans text-[10px] tracking-[0.4em] uppercase text-white/50 md:hidden">
+                  Tap to read
+                </p>
               </motion.div>
             )}
           </AnimatePresence>

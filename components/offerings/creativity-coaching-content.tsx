@@ -62,6 +62,19 @@ export default function CreativityCoachingContent() {
 
   return (
     <div className="bg-[#F5F4F1] min-h-screen relative text-foreground selection:bg-[#946DE3] selection:text-white">
+
+      {/* ── MOBILE STICKY CTA BAR ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden flex border-t border-foreground/10 bg-[#F5F4F1]/95 backdrop-blur-md" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+        <Link href="/begin" className="flex-1 flex flex-col items-center justify-center py-4 active:bg-foreground/5 transition-colors">
+          <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-muted-foreground font-bold">Begin Here</span>
+          <span className="font-serif text-base mt-0.5 text-[#946DE3]">→ Conversation</span>
+        </Link>
+        <div className="w-[1px] bg-foreground/10 my-3" />
+        <Link href="/offerings" className="flex-1 flex flex-col items-center justify-center py-4 active:bg-foreground/5 transition-colors">
+          <span className="font-sans text-[9px] tracking-[0.4em] uppercase text-muted-foreground font-bold">All Paths</span>
+          <span className="font-serif text-base mt-0.5">← The Signal</span>
+        </Link>
+      </div>
       
       {/* ACT I: The Threshold */}
       <section ref={r1} className="relative w-full h-[120vh] z-20">
@@ -259,18 +272,21 @@ export default function CreativityCoachingContent() {
       </section>
 
       {/* OUTRO */}
-      <section className="relative z-10 py-48 px-8 text-center bg-white border-t border-foreground/5">
-        <div className="flex flex-col items-center justify-center">
-            <h2 className="font-serif text-4xl md:text-6xl mb-16 tracking-tight">Ready to begin the journey?</h2>
+      <section className="relative z-10 py-24 md:py-48 px-8 text-center bg-white border-t border-foreground/5 pb-28 md:pb-24">
+        <div className="flex flex-col items-center justify-center gap-8">
+            <h2 className="font-serif text-3xl md:text-6xl tracking-tight">Ready to begin the journey?</h2>
             <Link href="/begin" className="group">
               <div className="flex flex-col items-center">
-                <span className="font-sans text-[10px] tracking-[0.8em] uppercase text-muted-foreground group-hover:text-foreground transition-all duration-700 font-bold mb-4">
+                <span className="font-sans text-[11px] tracking-[0.6em] uppercase text-muted-foreground group-hover:text-foreground transition-all duration-700 font-bold mb-4">
                   INITIATE THE DIALOGUE
                 </span>
                 <div 
                   className="w-full h-[2px] bg-[#946DE3] shadow-[0_0_15px_rgba(148,109,227,0.5)] transition-all duration-500 scale-x-50 group-hover:scale-x-100"
                 />
               </div>
+            </Link>
+            <Link href="/offerings" className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-500">
+              ← Explore all paths
             </Link>
         </div>
       </section>

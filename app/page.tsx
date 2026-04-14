@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useTransform, useInView } from "framer-motion"
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion"
 import { useRef, useState, useEffect, ReactNode, forwardRef } from "react"
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
@@ -10,10 +10,10 @@ import { Footer } from "@/components/footer"
 
 const Reveal = ({ children, delay = 0 }: { children: ReactNode, delay?: number }) => (
   <motion.div
-    initial={{ opacity: 0, filter: "blur(12px)" }}
+    initial={{ opacity: 0, filter: "blur(6px)" }}
     whileInView={{ opacity: 1, filter: "blur(0px)" }}
-    viewport={{ margin: "-20% 0px -20% 0px", once: true }}
-    transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
+    viewport={{ margin: "-10% 0px -10% 0px", once: true }}
+    transition={{ duration: 1.4, delay, ease: [0.22, 1, 0.36, 1] }}
   >
     {children}
   </motion.div>
@@ -21,10 +21,10 @@ const Reveal = ({ children, delay = 0 }: { children: ReactNode, delay?: number }
 
 const Rise = ({ children, delay = 0 }: { children: ReactNode, delay?: number }) => (
   <motion.div
-    initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+    initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
     whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-    viewport={{ margin: "-20% 0px -20% 0px", once: true }}
-    transition={{ duration: 1.2, delay, ease: [0.22, 1, 0.36, 1] }}
+    viewport={{ margin: "-10% 0px -10% 0px", once: true }}
+    transition={{ duration: 1.4, delay, ease: [0.22, 1, 0.36, 1] }}
   >
     {children}
   </motion.div>
@@ -93,11 +93,94 @@ const TestimonialVoice = ({ quote, author }: { quote: string, author: string }) 
   )
 }
 
+// --- MOBILE-ONLY ENHANCEMENTS ---
+
+// 6-dot scene progress indicator — fixed bottom-right, mobile-only
+function MobileSceneIndicator() {
+  const [activeScene, setActiveScene] = useState(0)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const SCENE_THRESHOLDS = [0.04, 0.13, 0.28, 0.42, 0.54, 0.68, 0.80, 0.91]
+    
+    const handleScroll = () => {
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      const progress = scrolled / total
+
+      setVisible(progress > 0.02)
+      
+      let current = 0
+      for (let i = 0; i < SCENE_THRESHOLDS.length; i++) {
+        if (progress >= SCENE_THRESHOLDS[i]) current = i
+      }
+      setActiveScene(current)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.5 }}
+      className="fixed right-4 top-1/2 -translate-y-1/2 z-40 md:hidden flex flex-col gap-2 pointer-events-none"
+      aria-hidden="true"
+    >
+      {Array.from({ length: 8 }).map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{
+            backgroundColor: i === activeScene ? '#FFC908' : 'rgba(26,26,26,0.2)',
+            scale: i === activeScene ? 1.4 : 1
+          }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          className="w-1 h-1 rounded-full"
+        />
+      ))}
+    </motion.div>
+  )
+}
+
+// Scroll hint chevron — pulses 3 times in hero, then disappears — mobile-only
+function MobileScrollHint() {
+  const [show, setShow] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShow(false), 4000)
+    const handleScroll = () => { if (window.scrollY > 50) setShow(false) }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => { clearTimeout(timer); window.removeEventListener('scroll', handleScroll) }
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: [0, 0.5, 0], y: [0, 8, 0] }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.8, repeat: 2, ease: 'easeInOut', delay: 1.5 }}
+          className="mt-8 flex justify-center md:hidden pointer-events-none"
+          aria-hidden="true"
+        >
+          <svg width="16" height="24" viewBox="0 0 16 24" fill="none">
+            <path d="M8 4 L8 20 M2 14 L8 20 L14 14" stroke="#946DE3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 // --- MAIN PAGE ---
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
   useEffect(() => { setMounted(true) }, [])
+
 
   const targetRef = useRef(null)
 
@@ -193,42 +276,53 @@ export default function HomePage() {
     <main ref={targetRef} className="bg-[#F5F4F1] relative text-foreground selection:bg-primary/30 selection:text-primary-foreground min-h-screen">
       <Navigation />
 
+      {/* MOBILE-ONLY: Scroll Depth Indicator */}
+      <MobileSceneIndicator />
+
       {/* ACT 1: THE ARREST (The Immediate Truth) */}
-      <ScrollScene ref={scene1Ref} height="h-[120vh]">
+      <ScrollScene ref={scene1Ref} height="h-[160vh] md:h-[120vh]">
         <StickyFrame>
-          {/* Background Strikethroughs (Industry Cliches) */}
-          <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.03] pointer-events-none select-none px-8">
+          {/* Background Strikethroughs (Industry Cliches) — hidden on mobile to prevent overflow */}
+          <div className="absolute inset-0 flex-col justify-center items-center opacity-[0.03] pointer-events-none select-none px-8 hidden md:flex overflow-hidden">
              <div className="relative">
-                <span className="font-serif text-6xl md:text-[12rem] leading-none whitespace-nowrap">Tactical Hacks.</span>
+                <span className="font-serif md:text-[12rem] leading-none whitespace-nowrap">Tactical Hacks.</span>
                 <div className="absolute top-1/2 left-0 w-full h-[4px] bg-[#946DE3] -rotate-3" />
              </div>
              <div className="relative mt-8 md:mt-16">
-                <span className="font-serif text-6xl md:text-[12rem] leading-none whitespace-nowrap">Morning Routines.</span>
+                <span className="font-serif md:text-[12rem] leading-none whitespace-nowrap">Morning Routines.</span>
                 <div className="absolute top-1/2 left-0 w-full h-[4px] bg-[#946DE3] rotate-2" />
              </div>
              <div className="relative mt-8 md:mt-16">
-                <span className="font-serif text-6xl md:text-[12rem] leading-none whitespace-nowrap">Passive Listening.</span>
+                <span className="font-serif md:text-[12rem] leading-none whitespace-nowrap">Passive Listening.</span>
                 <div className="absolute top-1/2 left-0 w-full h-[4px] bg-[#946DE3] -rotate-1" />
              </div>
           </div>
+          {/* Mobile strikethroughs — contained, no overflow */}
+          <div className="absolute inset-0 flex flex-col justify-center items-center opacity-[0.04] pointer-events-none select-none px-6 md:hidden overflow-hidden">
+             <span className="font-serif text-4xl leading-none italic">Tactical Hacks.</span>
+             <span className="font-serif text-4xl leading-none italic mt-4">Morning Routines.</span>
+             <span className="font-serif text-4xl leading-none italic mt-4">Passive Listening.</span>
+          </div>
 
-          <motion.div style={{ opacity: heroOpacity, filter: heroBlur }} className="max-w-6xl mx-auto space-y-12 text-center px-8 relative z-10">
-            <h1 className="font-serif text-7xl md:text-9xl lg:text-[11rem] tracking-tighter leading-[0.85] text-foreground">
+          <motion.div style={{ opacity: heroOpacity, filter: heroBlur }} className="max-w-6xl mx-auto space-y-10 md:space-y-12 text-center px-6 md:px-8 relative z-10">
+            <h1 className="font-serif text-[3.5rem] sm:text-7xl md:text-9xl lg:text-[11rem] tracking-tighter leading-[0.85] text-foreground">
               Beyond <br /> optimization.
             </h1>
-            <div className="space-y-12 max-w-2xl mx-auto">
-              <p className="font-sans text-[11px] md:text-sm tracking-[0.4em] uppercase text-muted-foreground font-bold leading-relaxed">
+            <div className="space-y-8 md:space-y-12 max-w-2xl mx-auto">
+              <p className="font-sans text-xs md:text-sm tracking-[0.3em] md:tracking-[0.4em] uppercase text-muted-foreground font-bold leading-loose">
                 A private 1:1 transformation space for builders, leaders, and creators to return to themselves and live with clarity, creativity, and quiet alignment.
               </p>
-              <div className="pt-8">
-                <Link href="/begin" className="group relative inline-flex items-center gap-4">
-                  <span className="font-sans text-[10px] md:text-xs tracking-[0.8em] uppercase text-foreground group-hover:text-primary transition-all duration-700 font-bold">
+              <div className="pt-6 md:pt-8">
+                <Link href="/begin" className="group relative inline-flex items-center gap-4 py-4 px-2 -mx-2">
+                  <span className="font-sans text-[11px] md:text-xs tracking-[0.6em] md:tracking-[0.8em] uppercase text-foreground group-hover:text-primary active:text-primary transition-all duration-700 font-bold">
                     ENTER THE SPACE
                   </span>
-                  <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-[#FFC908] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+                  <div className="absolute -bottom-2 left-2 right-2 h-[1px] bg-[#FFC908] scale-x-0 group-hover:scale-x-100 active:scale-x-100 transition-transform duration-700 origin-left" />
                 </Link>
               </div>
             </div>
+            {/* Mobile scroll hint — visible only on mobile, auto-fades */}
+            <MobileScrollHint />
           </motion.div>
         </StickyFrame>
       </ScrollScene>
@@ -275,26 +369,26 @@ export default function HomePage() {
                 className="absolute left-1/2 top-0 w-[2px] h-full bg-[#FFC908] z-30 shadow-[0_0_20px_rgba(244,180,0,0.3)]"
               />
 
-              {/* Left Side: The Exclusions (Masked) */}
+              {/* Left Side + Right Side: The Gate Content */}
               <div className="absolute inset-0 grid grid-cols-2">
-                 <div className="flex flex-col justify-center items-center px-12 md:px-24">
-                    <div className="max-w-md space-y-8 opacity-40">
-                       <span className="font-sans text-[10px] tracking-[1em] uppercase text-foreground font-bold">NOT THIS</span>
-                       <div className="space-y-4">
-                          <p className="font-serif text-2xl md:text-3xl">Not therapy.</p>
-                          <p className="font-serif text-2xl md:text-3xl">Not shortcuts.</p>
-                          <p className="font-serif text-2xl md:text-3xl">Not another way to become better.</p>
+                 <div className="flex flex-col justify-center items-center px-4 sm:px-8 md:px-24">
+                    <div className="max-w-md space-y-4 md:space-y-8 opacity-40">
+                       <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[1em] uppercase text-foreground font-bold">NOT THIS</span>
+                       <div className="space-y-2 md:space-y-4">
+                          <p className="font-serif text-lg md:text-3xl">Not therapy.</p>
+                          <p className="font-serif text-lg md:text-3xl">Not shortcuts.</p>
+                          <p className="font-serif text-base md:text-3xl leading-snug">Not another way to become better.</p>
                        </div>
                     </div>
                  </div>
                  
                  {/* Right Side: The Inclusions (Revealing) */}
-                 <div className="flex flex-col justify-center items-center px-12 md:px-24">
-                    <div className="max-w-md space-y-8">
-                       <span className="font-sans text-[10px] tracking-[1em] uppercase text-[#946DE3] font-bold">THIS</span>
-                       <p className="font-serif text-2xl md:text-4xl leading-tight">
+                 <div className="flex flex-col justify-center items-center px-4 sm:px-8 md:px-24">
+                    <div className="max-w-md space-y-4 md:space-y-8">
+                       <span className="font-sans text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[1em] uppercase text-[#946DE3] font-bold">THIS</span>
+                       <p className="font-serif text-base sm:text-xl md:text-4xl leading-snug md:leading-tight">
                           A space to see clearly, <br/>
-                          and let what isn’t true fall away <br/>
+                          and let what isn't true fall away <br/>
                           until only what matters remains.
                        </p>
                     </div>
@@ -308,7 +402,7 @@ export default function HomePage() {
               />
               <motion.div 
                 style={{ scaleX: useTransform(scroll3, [0.1, 0.9], [1, 0]), originX: 1 }}
-                className="absolute left-1/2 top-0 w-1/2 h-full bg-[#F5F4F1] z-20 opacity-0 md:opacity-100" // Hide revelation side initially
+                className="absolute left-1/2 top-0 w-1/2 h-full bg-[#F5F4F1] z-20"
               />
            </div>
         </StickyFrame>
@@ -615,63 +709,69 @@ const PATHS_OPT3 = [
 ];
 
 function TheDivergenceScene() {
-  const [hoveredPath, setHoveredPath] = useState<string | null>(null);
+  const [activePath, setActivePath] = useState<string | null>(null);
 
-  // Background color dynamically shifts based on hover
-  const activePath = PATHS_OPT3.find(p => p.id === hoveredPath);
-  const bg = activePath ? activePath.bgColor : "#F5F4F1"; // Base color is now light
-  const defaultText = "#1A1A1A"; // Default text for base state
+  // Background color dynamically shifts based on hover/touch
+  const activePathData = PATHS_OPT3.find(p => p.id === activePath);
+  const bg = activePathData ? activePathData.bgColor : "#F5F4F1";
+  const defaultText = "#1A1A1A";
+
+  const handleActivate = (id: string) => setActivePath(id);
+  const handleDeactivate = () => setActivePath(null);
 
   return (
     <motion.section 
       animate={{ backgroundColor: bg }}
-      transition={{ duration: 1, ease: "easeInOut" }}
-      className="relative w-full min-h-[100vh] flex flex-col justify-center px-6 md:px-24 py-32 z-20 overflow-hidden"
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className="relative w-full min-h-[100vh] flex flex-col justify-center px-6 md:px-24 py-24 md:py-32 z-20 overflow-hidden"
     >
       <div className="max-w-6xl mx-auto w-full relative z-10">
         <p 
-          className="font-sans text-[10px] md:text-xs tracking-[0.8em] uppercase font-bold mb-16 md:mb-24 transition-colors duration-1000"
-          style={{ color: activePath ? activePath.textColor : defaultText, opacity: 0.5 }}
+          className="font-sans text-[11px] md:text-xs tracking-[0.5em] md:tracking-[0.8em] uppercase font-bold mb-12 md:mb-24 transition-colors duration-1000"
+          style={{ color: activePathData ? activePathData.textColor : defaultText, opacity: 0.5 }}
         >
           The friction ends when you are ready to...
         </p>
 
-        <div className="space-y-12 md:space-y-8 pl-0 md:pl-12 lg:pl-24">
+        <div className="space-y-10 md:space-y-8 pl-0 md:pl-12 lg:pl-24">
           {PATHS_OPT3.map((path) => {
-            const isHovered = hoveredPath === path.id;
-            const isOtherHovered = hoveredPath !== null && !isHovered;
+            const isActive = activePath === path.id;
+            const isOtherActive = activePath !== null && !isActive;
 
             return (
               <div 
                 key={path.id}
-                onMouseEnter={() => setHoveredPath(path.id)}
-                onMouseLeave={() => setHoveredPath(null)}
-                className="relative group cursor-pointer block"
+                onMouseEnter={() => handleActivate(path.id)}
+                onMouseLeave={handleDeactivate}
+                onTouchStart={() => handleActivate(path.id)}
+                onTouchEnd={handleDeactivate}
+                onTouchCancel={handleDeactivate}
+                className="relative group cursor-pointer block py-2"
               >
                 <Link href={path.href} className="absolute inset-0 z-20" aria-label={path.action} />
                 
                 <motion.div
                   initial={false}
                   animate={{ 
-                    opacity: isOtherHovered ? 0.15 : 1,
-                    filter: isOtherHovered ? "blur(8px)" : "blur(0px)",
-                    x: isHovered ? 20 : 0
+                    opacity: isOtherActive ? 0.15 : 1,
+                    filter: isOtherActive ? "blur(6px)" : "blur(0px)",
+                    x: isActive ? 12 : 0
                   }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="flex items-start md:items-center gap-4 md:gap-12 transition-colors duration-1000"
-                  style={{ color: activePath ? activePath.textColor : defaultText }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-start md:items-center gap-4 md:gap-12 transition-colors duration-700"
+                  style={{ color: activePathData ? activePathData.textColor : defaultText }}
                 >
                   <motion.div 
-                    animate={{ scaleX: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="w-8 md:w-16 lg:w-24 h-[2px] mt-6 md:mt-0 origin-left shrink-0"
+                    animate={{ scaleX: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="w-6 md:w-16 lg:w-24 h-[2px] mt-5 md:mt-0 origin-left shrink-0"
                     style={{ backgroundColor: path.indicator }}
                   />
                   <div className="flex flex-col md:flex-row md:items-baseline gap-1 md:gap-6">
-                    <span className="font-serif text-5xl md:text-7xl lg:text-[7rem] tracking-tighter leading-none group-hover:italic transition-all duration-700">
+                    <span className="font-serif text-[2.8rem] sm:text-5xl md:text-7xl lg:text-[7rem] tracking-tighter leading-none group-active:italic transition-all duration-700" style={{ fontStyle: isActive ? 'italic' : 'normal' }}>
                       {path.action}
                     </span>
-                    <span className="font-serif text-xl md:text-3xl lg:text-4xl opacity-60 italic">
+                    <span className="font-serif text-lg md:text-3xl lg:text-4xl opacity-60 italic leading-snug">
                       {path.subject}
                     </span>
                   </div>
