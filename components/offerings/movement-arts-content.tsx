@@ -1,8 +1,67 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
+
+// Mobile-only: Movement archetype as a somatic awakening — body recognizes itself
+// Heavier entry, gold accent, physical sensation arrives last
+function MobileKineticReveal({
+  item,
+  index,
+}: {
+  item: { title: string; desc: string; hint: string }
+  index: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.2, rootMargin: "0px 0px -5% 0px" }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60, filter: "blur(6px)" }}
+      animate={visible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+      className="relative px-6 py-11 border-t border-[#1A1A1A]/10"
+    >
+      {/* Gold accent — the body's signal color */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={visible ? { scaleX: 1 } : {}}
+        transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
+        className="absolute top-0 left-6 h-[2px] w-8 origin-left bg-[#FFC908]"
+      />
+
+      <h3 className="font-serif text-[2.1rem] leading-[0.95] tracking-tight text-[#1A1A1A] mb-4">
+        {item.title}
+      </h3>
+      <p className="font-serif text-base leading-relaxed text-[#1A1A1A]/65 max-w-xs mb-6">
+        {item.desc}
+      </p>
+
+      {/* The somatic whisper — arrives late, like sensation */}
+      <motion.p
+        initial={{ opacity: 0, y: 6 }}
+        animate={visible ? { opacity: 0.45, y: 0 } : {}}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.9 }}
+        className="font-serif italic text-sm text-[#1A1A1A] leading-snug"
+      >
+        {item.hint}
+      </motion.p>
+    </motion.div>
+  )
+}
 
 export default function MovementArtsContent() {
   // Section Refs
@@ -163,76 +222,64 @@ export default function MovementArtsContent() {
         </div>
       </section>
 
-      {/* ACT IV: The Archetypes Filmstrip */}
-      <section ref={r4} className="relative w-full h-[600vh] z-20 bg-[#F5F4F1] text-[#1A1A1A] border-t border-[#1A1A1A]/5 pt-32 md:pt-0">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-           <div className="text-center mb-16 px-6">
+      {/* ACT IV: The Archetypes */}
+      <section ref={r4} className="relative w-full z-20 bg-[#F5F4F1] text-[#1A1A1A] border-t border-[#1A1A1A]/5">
+
+        {/* ── DESKTOP: Horizontal Filmstrip (unchanged) ── */}
+        <div className="hidden md:block relative w-full h-[600vh]">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+            <div className="text-center mb-16 px-6">
               <h2 className="font-serif text-5xl md:text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
               <p className="font-sans text-[10px] tracking-[0.4em] uppercase text-[#1A1A1A]/50 font-bold">Scroll through to explore.</p>
-           </div>
-
-           {/* The Horizontal Filmstrip Container */}
-           <motion.div 
-             style={{ x: s4X }}
-             className="flex gap-4 md:gap-16 px-6 md:px-[10vw] w-max"
-           >
+            </div>
+            <motion.div style={{ x: s4X }} className="flex gap-4 md:gap-16 px-6 md:px-[10vw] w-max">
               {[
-                {
-                  title: "Fit for Life",
-                  desc: "Those seeking to foster long-term health, youthfulness, and well-being. Moving beyond quick fixes to cultivate a sustainable practice that revitalizes joints and organs.",
-                  hint: "If your body feels like something to manage, not inhabit."
-                },
-                {
-                  title: "Body-Mind-Heart Balance",
-                  desc: "Those looking to center themselves, cultivating inner silence and mindfulness through movement so they can meet everyday stressors with grace and equanimity.",
-                  hint: "If you are physically active but internally depleted."
-                },
-                {
-                  title: "Athletes, Movers & Shakers",
-                  desc: "Professional and hobbyist athletes seeking a sub-base of healthy physical development that supports them holistically to excel in their chosen disciplines.",
-                  hint: "If you're training hard but something foundational feels missing."
-                },
-                {
-                  title: "Artists, Creators & Mavericks",
-                  desc: "Those looking for a profound non-linear movement practice which supports doing what they do with vigour, bringing more play and imagination into their domains.",
-                  hint: "If your body is the last frontier you haven't explored."
-                },
-                {
-                  title: "Fitness Enthusiasts",
-                  desc: "Those jaded from conventional, linear exercise routines, seeking to explore a deeper, dynamic alternative that elevates their training into an art form.",
-                  hint: "If the gym stopped feeling alive a long time ago."
-                },
-                {
-                  title: "Coaches & Trainers",
-                  desc: "Owners of gyms and facilities seeking to infuse more depth, play, and creative ideas into their training, making them more alive for their clients.",
-                  hint: "If you want your sessions to feel less like protocol and more like poetry."
-                },
-                {
-                  title: "Spiritual Seekers",
-                  desc: "Those on a quest to connect to the source within, opening pathways to higher observation. Embracing a practice that transcends physicality, yet grounded in the body.",
-                  hint: "If you believe the body and spirit are not separate."
-                }
+                { title: "Fit for Life", desc: "Those seeking to foster long-term health, youthfulness, and well-being. Moving beyond quick fixes to cultivate a sustainable practice that revitalizes joints and organs.", hint: "If your body feels like something to manage, not inhabit." },
+                { title: "Body-Mind-Heart Balance", desc: "Those looking to center themselves, cultivating inner silence and mindfulness through movement so they can meet everyday stressors with grace and equanimity.", hint: "If you are physically active but internally depleted." },
+                { title: "Athletes, Movers & Shakers", desc: "Professional and hobbyist athletes seeking a sub-base of healthy physical development that supports them holistically to excel in their chosen disciplines.", hint: "If you're training hard but something foundational feels missing." },
+                { title: "Artists, Creators & Mavericks", desc: "Those looking for a profound non-linear movement practice which supports doing what they do with vigour, bringing more play and imagination into their domains.", hint: "If your body is the last frontier you haven't explored." },
+                { title: "Fitness Enthusiasts", desc: "Those jaded from conventional, linear exercise routines, seeking to explore a deeper, dynamic alternative that elevates their training into an art form.", hint: "If the gym stopped feeling alive a long time ago." },
+                { title: "Coaches & Trainers", desc: "Owners of gyms and facilities seeking to infuse more depth, play, and creative ideas into their training, making them more alive for their clients.", hint: "If you want your sessions to feel less like protocol and more like poetry." },
+                { title: "Spiritual Seekers", desc: "Those on a quest to connect to the source within, opening pathways to higher observation. Embracing a practice that transcends physicality, yet grounded in the body.", hint: "If you believe the body and spirit are not separate." }
               ].map((item, i) => (
                 <div key={i} className="flex-shrink-0 w-[85vw] md:w-[32vw] bg-white border border-[#1A1A1A]/10 p-8 md:p-12 flex flex-col justify-between group hover:bg-[#FFC908] hover:text-[#1A1A1A] transition-colors duration-700 text-[#1A1A1A] shadow-sm hover:shadow-xl">
-                   <div>
-                      <div className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 group-hover:text-[#1A1A1A] font-bold mb-8">Type 0{i+1}</div>
-                      <h3 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-8">
-                        {item.title}
-                      </h3>
-                   </div>
-                   <p className="font-serif text-base md:text-lg opacity-80 leading-relaxed max-w-sm">
-                      {item.desc}
-                   </p>
-                   {/* PHASE 7: Hover micro-reveal */}
-                   <div className="overflow-hidden mt-6 pt-4 border-t border-[#1A1A1A]/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
-                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A]">
-                       {item.hint}
-                     </p>
-                   </div>
+                  <div>
+                    <div className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#1A1A1A]/50 group-hover:text-[#1A1A1A] font-bold mb-8">Type 0{i+1}</div>
+                    <h3 className="font-serif text-3xl md:text-4xl tracking-tight leading-tight mb-8">{item.title}</h3>
+                  </div>
+                  <p className="font-serif text-base md:text-lg opacity-80 leading-relaxed max-w-sm">{item.desc}</p>
+                  <div className="overflow-hidden mt-6 pt-4 border-t border-[#1A1A1A]/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
+                    <p className="font-sans text-[10px] tracking-[0.25em] uppercase text-[#1A1A1A]">{item.hint}</p>
+                  </div>
                 </div>
               ))}
-           </motion.div>
+            </motion.div>
+          </div>
         </div>
+
+        {/* ── MOBILE: Somatic Identity Awakening ── */}
+        <div className="md:hidden">
+          <div className="px-6 pt-24 pb-16">
+            <h2 className="font-serif text-[2.6rem] tracking-tighter text-[#1A1A1A] leading-[0.9]">
+              Who is<br /><em>this for?</em>
+            </h2>
+          </div>
+          <div className="flex flex-col">
+            {[
+              { title: "Fit for Life", desc: "Those seeking to foster long-term health, youthfulness, and well-being. Moving beyond quick fixes to cultivate a sustainable practice that revitalizes joints and organs.", hint: "If your body feels like something to manage, not inhabit." },
+              { title: "Body-Mind-Heart Balance", desc: "Those looking to center themselves, cultivating inner silence and mindfulness through movement so they can meet everyday stressors with grace and equanimity.", hint: "If you are physically active but internally depleted." },
+              { title: "Athletes, Movers & Shakers", desc: "Professional and hobbyist athletes seeking a sub-base of healthy physical development that supports them holistically to excel in their chosen disciplines.", hint: "If you're training hard but something foundational feels missing." },
+              { title: "Artists, Creators & Mavericks", desc: "Those looking for a profound non-linear movement practice which supports doing what they do with vigour, bringing more play and imagination into their domains.", hint: "If your body is the last frontier you haven't explored." },
+              { title: "Fitness Enthusiasts", desc: "Those jaded from conventional, linear exercise routines, seeking to explore a deeper, dynamic alternative that elevates their training into an art form.", hint: "If the gym stopped feeling alive a long time ago." },
+              { title: "Coaches & Trainers", desc: "Owners of gyms and facilities seeking to infuse more depth, play, and creative ideas into their training, making them more alive for their clients.", hint: "If you want your sessions to feel less like protocol and more like poetry." },
+              { title: "Spiritual Seekers", desc: "Those on a quest to connect to the source within, opening pathways to higher observation. Embracing a practice that transcends physicality, yet grounded in the body.", hint: "If you believe the body and spirit are not separate." }
+            ].map((item, i) => (
+              <MobileKineticReveal key={i} item={item} index={i} />
+            ))}
+          </div>
+          <div className="h-16" />
+        </div>
+
       </section>
 
       {/* ACT V: The Embrace & Lineage */}

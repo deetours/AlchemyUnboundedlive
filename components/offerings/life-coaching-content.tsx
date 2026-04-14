@@ -1,7 +1,7 @@
 "use client"
 
-import React, { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import React, { useRef, useState, useEffect, useCallback } from "react"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 
 // --- UTILS ---
@@ -55,6 +55,70 @@ const ARCHETYPES = [
     hint: "If the question 'is this all there is?' keeps returning."
   }
 ]
+
+// Mobile-only: Each archetype is a cinematic scroll-triggered identity moment
+// No carousel. No swipe. Scroll is the silent instruction.
+function MobileArchetypeReveal({
+  arch,
+  index,
+  accentColor,
+}: {
+  arch: { title: string; subtitle: string; desc: string; hint: string }
+  index: number
+  accentColor: string
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.3, rootMargin: "0px 0px -10% 0px" }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 48, filter: "blur(8px)" }}
+      animate={visible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+      className="relative px-6 py-10 border-t border-[#1A1A1A]/10"
+    >
+      {/* Thin accent line — progress without counting */}
+      <div
+        className="absolute top-0 left-6 h-[2px] w-8 transition-all duration-700"
+        style={{ backgroundColor: visible ? accentColor : "transparent" }}
+      />
+
+      {/* Archetype identity */}
+      <p className="font-sans text-[9px] tracking-[0.5em] uppercase mb-5 mt-1"
+         style={{ color: accentColor, opacity: 0.7 }}>
+        {arch.subtitle}
+      </p>
+      <h3 className="font-serif text-[2.2rem] leading-[0.95] tracking-tight text-[#1A1A1A] mb-5">
+        {arch.title}
+      </h3>
+      <p className="font-serif text-base leading-relaxed text-[#1A1A1A]/70 max-w-xs">
+        {arch.desc}
+      </p>
+
+      {/* The whisper — appears with a delay, fades in quieter */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={visible ? { opacity: 0.4 } : {}}
+        transition={{ duration: 1.4, ease: "easeOut", delay: 0.6 }}
+        className="font-serif italic text-sm text-[#1A1A1A] mt-6 leading-snug"
+      >
+        {arch.hint}
+      </motion.p>
+    </motion.div>
+  )
+}
 
 function LifeCoachingInterior() {
   const r1 = useRef<HTMLElement>(null)
@@ -237,37 +301,53 @@ function LifeCoachingInterior() {
         </div>
       </section>
 
-      {/* ACT IV: The Archetypes Filmstrip */}
-      <section ref={r4} className="relative w-full h-[600vh] z-20 bg-white">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-           <div className="text-center mb-12 md:mb-16 px-6">
-              <h2 className="font-serif text-4xl md:text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
-              <p className="font-sans text-[11px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] uppercase text-muted-foreground font-bold">
-                <span className="md:hidden">Swipe to explore.</span>
-                <span className="hidden md:inline">Scroll through to explore.</span>
-              </p>
-           </div>
+      {/* ACT IV: The Archetypes */}
+      <section ref={r4} className="relative w-full z-20 bg-white">
 
-           {/* The Horizontal Filmstrip Container */}
-           <motion.div 
-             style={{ x: s4X }} 
-             className="flex gap-8 px-[10vw] items-center w-max"
-           >
-             {ARCHETYPES.map((arch, i) => (
-                <div key={i} className="min-w-[82vw] md:min-w-[40vw] lg:min-w-[25vw] h-full flex flex-col p-8 md:p-12 border border-foreground/10 bg-[#F5F4F1] hover:bg-[#946DE3] hover:text-white transition-all duration-700 rounded-xl group shrink-0">
-                   <h3 className="font-serif text-3xl md:text-4xl mb-4">{arch.title}</h3>
-                   <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FFC908] mb-8 group-hover:text-white transition-colors duration-500">{arch.subtitle}</h4>
-                   <p className="font-serif text-lg md:text-xl leading-relaxed opacity-70 group-hover:opacity-100">{arch.desc}</p>
-                   {/* PHASE 7: Hover micro-reveal */}
-                   <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700 ease-[0.16,1,0.3,1]">
-                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase">
-                       {arch.hint}
-                     </p>
-                   </div>
+        {/* ── DESKTOP: Horizontal Filmstrip (unchanged) ── */}
+        <div className="hidden md:block relative w-full h-[600vh]">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+            <div className="text-center mb-16 px-6">
+              <h2 className="font-serif text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
+              <p className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground font-bold">Scroll through to explore.</p>
+            </div>
+            <motion.div style={{ x: s4X }} className="flex gap-8 px-[10vw] items-center w-max">
+              {ARCHETYPES.map((arch, i) => (
+                <div key={i} className="min-w-[40vw] lg:min-w-[25vw] h-full flex flex-col p-12 border border-foreground/10 bg-[#F5F4F1] hover:bg-[#946DE3] hover:text-white transition-all duration-700 rounded-xl group shrink-0">
+                  <h3 className="font-serif text-4xl mb-4">{arch.title}</h3>
+                  <h4 className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FFC908] mb-8 group-hover:text-white transition-colors duration-500">{arch.subtitle}</h4>
+                  <p className="font-serif text-xl leading-relaxed opacity-70 group-hover:opacity-100">{arch.desc}</p>
+                  <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
+                    <p className="font-sans text-[10px] tracking-[0.25em] uppercase">{arch.hint}</p>
+                  </div>
                 </div>
-             ))}
-           </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
+
+        {/* ── MOBILE: Scroll-Driven Identity Reveal ── */}
+        {/* Each archetype is its own cinematic moment. No instructions. Scroll is the affordance. */}
+        <div className="md:hidden">
+          {/* Section header — appears once, then the journey begins */}
+          <div className="px-6 pt-24 pb-16">
+            <h2 className="font-serif text-[2.6rem] tracking-tighter text-[#1A1A1A] leading-[0.9] mb-6">
+              Who is<br /><em>this for?</em>
+            </h2>
+            {/* No instruction text. The scroll teaches. */}
+          </div>
+
+          {/* Each card is a full scene — not a carousel item */}
+          <div className="flex flex-col">
+            {ARCHETYPES.map((arch, i) => (
+              <MobileArchetypeReveal key={i} arch={arch} index={i} accentColor="#946DE3" />
+            ))}
+          </div>
+
+          {/* Closing breath — space before next act */}
+          <div className="h-16" />
+        </div>
+
       </section>
 
       {/* ACT V: The Monolith Containers */}

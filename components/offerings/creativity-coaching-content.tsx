@@ -1,8 +1,64 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
+
+// Mobile-only: Creativity archetype as a cinematic clearing — creative fog lifts
+function MobileCreativeReveal({
+  item,
+  index,
+}: {
+  item: { title: string; desc: string; hint: string }
+  index: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setVisible(true) },
+      { threshold: 0.25, rootMargin: "0px 0px -8% 0px" }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
+      animate={visible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+      className="relative px-6 py-12 border-t border-[#1A1A1A]/8"
+    >
+      {/* Purple accent — creativity's signal color */}
+      <div
+        className="absolute top-0 left-6 h-[1px] w-12 transition-all duration-1000"
+        style={{ backgroundColor: visible ? "#946DE3" : "transparent" }}
+      />
+
+      <h3 className="font-serif text-[2rem] leading-[0.95] tracking-tight text-[#1A1A1A] mb-4">
+        {item.title}
+      </h3>
+      <p className="font-serif text-base leading-relaxed text-[#1A1A1A]/65 max-w-xs mb-6">
+        {item.desc}
+      </p>
+
+      {/* The creative whisper — more present here, like intuition speaking */}
+      <motion.p
+        initial={{ opacity: 0, x: -8 }}
+        animate={visible ? { opacity: 0.5, x: 0 } : {}}
+        transition={{ duration: 1.6, ease: "easeOut", delay: 0.7 }}
+        className="font-serif italic text-base text-[#946DE3] leading-snug"
+      >
+        {item.hint}
+      </motion.p>
+    </motion.div>
+  )
+}
 
 export default function CreativityCoachingContent() {
   // Section Refs
@@ -189,71 +245,62 @@ export default function CreativityCoachingContent() {
         </div>
       </section>
 
-      {/* ACT IV: The Archetypes Filmstrip */}
-      <section ref={r4} className="relative w-full h-[600vh] z-20 bg-white">
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
-           <div className="text-center mb-16 px-6">
+      {/* ACT IV: The Archetypes */}
+      <section ref={r4} className="relative w-full z-20 bg-white">
+
+        {/* ── DESKTOP: Horizontal Filmstrip (unchanged) ── */}
+        <div className="hidden md:block relative w-full h-[600vh]">
+          <div className="sticky top-0 h-screen w-full flex flex-col justify-center overflow-hidden">
+            <div className="text-center mb-16 px-6">
               <h2 className="font-serif text-5xl md:text-7xl tracking-tighter text-[#1A1A1A] mb-4">Who is this for?</h2>
               <p className="font-sans text-[10px] tracking-[0.4em] uppercase text-muted-foreground font-bold">Scroll through to explore.</p>
-           </div>
-
-           {/* The Horizontal Filmstrip Container */}
-           <motion.div 
-             style={{ x: s4X }}
-             className="flex gap-8 md:gap-16 px-6 md:px-[10vw] w-max"
-           >
+            </div>
+            <motion.div style={{ x: s4X }} className="flex gap-8 md:gap-16 px-6 md:px-[10vw] w-max">
               {[
-                {
-                  title: "Soul Driven & Conscious Creators",
-                  desc: "Those who have experienced success in their fields but desire to dream bigger and create deeper, more meaningful work from the depths of their soul.",
-                  hint: "If success feels hollow and something deeper is calling."
-                },
-                {
-                  title: "Blocked Creatives",
-                  desc: "Those feeling blocked, stuck, frustrated, lost or uninspired. Those who wish to unblock themselves, reignite their spirit, and overcome fear, resistance, and procrastination.",
-                  hint: "If the work is there but you can't begin."
-                },
-                {
-                  title: "Recovering Creatives",
-                  desc: "Those who had to give up creative dreams due to responsibilities. Those who have taken a long break. Those who are ready to reinvent themselves and start anew.",
-                  hint: "If you put your creative self on hold — and miss them."
-                },
-                {
-                  title: "Multi-Passionate Creatives",
-                  desc: "Those with multiple creative interests who lack clarity to bring passions together. Those who struggle with indecision and need to channel their diverse strengths powerfully.",
-                  hint: "If everything interests you but nothing has your full commitment."
-                },
-                {
-                  title: "Skeptics & Curious Creatives",
-                  desc: "Those who think they don't have a creative bone in them. Those curious to explore their creative propensity, build confidence, and live as an artist in the whole sphere of life.",
-                  hint: "If you've always believed creativity wasn't for you."
-                },
-                {
-                  title: "Meaning Seekers",
-                  desc: "Those suffering an existential crisis or lack of meaning in their work or life. Those who wish to rejuvenate their journeys, rediscover their mojo and find new ways of creating meaning.",
-                  hint: "If you're going through the motions but feeling none of it."
-                }
+                { title: "Soul Driven & Conscious Creators", desc: "Those who have experienced success in their fields but desire to dream bigger and create deeper, more meaningful work from the depths of their soul.", hint: "If success feels hollow and something deeper is calling." },
+                { title: "Blocked Creatives", desc: "Those feeling blocked, stuck, frustrated, lost or uninspired. Those who wish to unblock themselves, reignite their spirit, and overcome fear, resistance, and procrastination.", hint: "If the work is there but you can't begin." },
+                { title: "Recovering Creatives", desc: "Those who had to give up creative dreams due to responsibilities. Those who have taken a long break. Those who are ready to reinvent themselves and start anew.", hint: "If you put your creative self on hold — and miss them." },
+                { title: "Multi-Passionate Creatives", desc: "Those with multiple creative interests who lack clarity to bring passions together. Those who struggle with indecision and need to channel their diverse strengths powerfully.", hint: "If everything interests you but nothing has your full commitment." },
+                { title: "Skeptics & Curious Creatives", desc: "Those who think they don't have a creative bone in them. Those curious to explore their creative propensity, build confidence, and live as an artist in the whole sphere of life.", hint: "If you've always believed creativity wasn't for you." },
+                { title: "Meaning Seekers", desc: "Those suffering an existential crisis or lack of meaning in their work or life. Those who wish to rejuvenate their journeys, rediscover their mojo and find new ways of creating meaning.", hint: "If you're going through the motions but feeling none of it." }
               ].map((item, i) => (
-                <div key={i} className="flex-shrink-0 w-[80vw] md:w-[35vw] bg-[#F5F4F1] border border-foreground/5 p-8 md:p-16 flex flex-col justify-between group hover:bg-[#946DE3] hover:text-white transition-colors duration-700">
-                   <div>
-                      <div className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#946DE3] group-hover:text-white/70 font-bold mb-8">Type 0{i+1}</div>
-                      <h3 className="font-serif text-3xl md:text-5xl tracking-tight leading-tight mb-8">
-                        {item.title}
-                      </h3>
-                   </div>
-                   <p className="font-serif text-lg md:text-xl opacity-70 leading-relaxed max-w-sm">
-                      {item.desc}
-                   </p>
-                   {/* PHASE 7: Hover micro-reveal */}
-                   <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
-                     <p className="font-sans text-[10px] tracking-[0.25em] uppercase">
-                       {item.hint}
-                     </p>
-                   </div>
+                <div key={i} className="flex-shrink-0 w-[35vw] bg-[#F5F4F1] border border-foreground/5 p-8 md:p-16 flex flex-col justify-between group hover:bg-[#946DE3] hover:text-white transition-colors duration-700">
+                  <div>
+                    <div className="font-sans text-[10px] tracking-[0.6em] uppercase text-[#946DE3] group-hover:text-white/70 font-bold mb-8">Type 0{i+1}</div>
+                    <h3 className="font-serif text-3xl md:text-5xl tracking-tight leading-tight mb-8">{item.title}</h3>
+                  </div>
+                  <p className="font-serif text-lg md:text-xl opacity-70 leading-relaxed max-w-sm">{item.desc}</p>
+                  <div className="overflow-hidden mt-6 pt-4 border-t border-current/10 max-h-0 opacity-0 group-hover:max-h-16 group-hover:opacity-60 transition-all duration-700">
+                    <p className="font-sans text-[10px] tracking-[0.25em] uppercase">{item.hint}</p>
+                  </div>
                 </div>
               ))}
-           </motion.div>
+            </motion.div>
+          </div>
         </div>
+
+        {/* ── MOBILE: Cinematic Identity Stacking ── */}
+        <div className="md:hidden">
+          <div className="px-6 pt-24 pb-16">
+            <h2 className="font-serif text-[2.6rem] tracking-tighter text-[#1A1A1A] leading-[0.9]">
+              Who is<br /><em>this for?</em>
+            </h2>
+          </div>
+          <div className="flex flex-col">
+            {[
+              { title: "Soul Driven & Conscious Creators", desc: "Those who have experienced success in their fields but desire to dream bigger and create deeper, more meaningful work from the depths of their soul.", hint: "If success feels hollow and something deeper is calling." },
+              { title: "Blocked Creatives", desc: "Those feeling blocked, stuck, frustrated, lost or uninspired. Those who wish to unblock themselves, reignite their spirit, and overcome fear, resistance, and procrastination.", hint: "If the work is there but you can't begin." },
+              { title: "Recovering Creatives", desc: "Those who had to give up creative dreams due to responsibilities. Those who have taken a long break. Those who are ready to reinvent themselves and start anew.", hint: "If you put your creative self on hold — and miss them." },
+              { title: "Multi-Passionate Creatives", desc: "Those with multiple creative interests who lack clarity to bring passions together. Those who struggle with indecision and need to channel their diverse strengths powerfully.", hint: "If everything interests you but nothing has your full commitment." },
+              { title: "Skeptics & Curious Creatives", desc: "Those who think they don't have a creative bone in them. Those curious to explore their creative propensity, build confidence, and live as an artist in the whole sphere of life.", hint: "If you've always believed creativity wasn't for you." },
+              { title: "Meaning Seekers", desc: "Those suffering an existential crisis or lack of meaning in their work or life. Those who wish to rejuvenate their journeys, rediscover their mojo and find new ways of creating meaning.", hint: "If you're going through the motions but feeling none of it." }
+            ].map((item, i) => (
+              <MobileCreativeReveal key={i} item={item} index={i} />
+            ))}
+          </div>
+          <div className="h-16" />
+        </div>
+
       </section>
 
       {/* ACT V: The Embrace Monolith */}
