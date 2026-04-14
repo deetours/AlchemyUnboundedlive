@@ -94,15 +94,15 @@ export default function CreativityCoachingContent() {
   const s3BgOp = useTransform(s3, [0, 0.2, 0.8, 1], [0, 0.8, 0.8, 0])
   const s3Scale = useTransform(s3, [0, 1], [0.8, 2.5])
   
-  // Anchor Header
-  const s3Op1 = useTransform(s3, [0, 0.2], [0, 1])
-  const s3Blur1 = useTransform(s3, [0, 0.2], ["10px", "0px"])
+  // Anchor Header — fades IN then OUT before waterfall enters (relay baton, not overlay)
+  const s3Op1 = useTransform(s3, [0, 0.15, 0.28], [0, 1, 0])
+  const s3Blur1 = useTransform(s3, [0, 0.15, 0.28], ["10px", "0px", "10px"])
   
   // Waterfall List
   const s3ListOp = useTransform(s3, [0.1, 0.3, 0.7, 0.9], [0, 1, 1, 0])
   const s3ListY = useTransform(s3, [0.1, 0.9], ["90vh", "-90vh"])
 
-  // Final Conclusion
+  // Final Conclusion — enters only after waterfall has exited
   const s3Op3 = useTransform(s3, [0.75, 0.9], [0, 1])
   const s3Blur3 = useTransform(s3, [0.75, 0.9], ["10px", "0px"])
 
