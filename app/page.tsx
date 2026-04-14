@@ -310,7 +310,7 @@ export default function HomePage() {
             </h1>
             <div className="space-y-8 md:space-y-12 max-w-2xl mx-auto">
               <p className="font-sans text-xs md:text-sm tracking-[0.3em] md:tracking-[0.4em] uppercase text-muted-foreground font-bold leading-loose">
-                A private 1:1 transformation space for builders, leaders, and creators to return to themselves and live with clarity, creativity, and quiet alignment.
+                A private 1:1 transformation space for leaders, creators, and those drawn to something deeper to return to themselves and live with clarity, creativity, and quiet alignment.
               </p>
               <div className="pt-6 md:pt-8">
                 <Link href="/begin" className="group relative inline-flex items-center gap-4 py-4 px-2 -mx-2">
